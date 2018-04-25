@@ -24070,7 +24070,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+accept(persona: Persona): Boolean",
+											"text": "+acepta(persona: Persona): Boolean",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -43409,7 +43409,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFi4F8We/Sq/FE="
 							},
-							"name": "accept",
+							"name": "acepta",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
