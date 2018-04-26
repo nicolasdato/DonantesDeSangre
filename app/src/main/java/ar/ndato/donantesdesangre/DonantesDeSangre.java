@@ -1,6 +1,7 @@
 package ar.ndato.donantesdesangre;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -9,6 +10,9 @@ import java.util.Set;
 public class DonantesDeSangre {
     private static DonantesDeSangre instancia;
 
+    /**
+     * Yo esta incluido dentro de {@link donantes}
+     */
     private Persona yo;
     private Set<Persona> donantes;
     /**
@@ -16,7 +20,7 @@ public class DonantesDeSangre {
      * @see getInstance()
      */
     private DonantesDeSangre() {
-        donantes = new HashSet<Persona>();
+        donantes = new HashSet<>();
     }
 
     /**
