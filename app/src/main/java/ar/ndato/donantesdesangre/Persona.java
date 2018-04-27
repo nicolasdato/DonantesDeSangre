@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import ar.ndato.donantesdesangre.ar.ndato.donantesdesangre.sangre.Sangre;
+
 /**
  * Clase para modelar los donantes
  */
@@ -18,8 +20,9 @@ public class Persona {
     private Boolean favorito;
     private Date nacimiento;
     private Set<Donacion> donaciones;
+    private Sangre sangre;
 
-    public Persona(String nombre, String localidad, String provincia, String direccion, String telefono, String mail, Boolean favorito, Date nacimiento) {
+    public Persona(String nombre, String localidad, String provincia, String direccion, String telefono, String mail, Boolean favorito, Date nacimiento, Sangre sangre) {
         this.nombre = nombre;
         this.localidad = localidad;
         this.provincia = provincia;
@@ -28,6 +31,7 @@ public class Persona {
         this.mail = mail;
         this.favorito = favorito;
         this.nacimiento = nacimiento;
+        this.sangre = sangre;
 
         donaciones = new HashSet<Donacion>();
     }
@@ -38,17 +42,28 @@ public class Persona {
         if(otro == this) return true;
         if(!(otro instanceof Persona)) return false;
 
-        Persona persona = (Persona)otro;
+        Persona p = (Persona)otro;
 
-        if(!persona.getNombre().equals(nombre)) return false;
-        if(!persona.getLocalidad().equals(localidad)) return false;
-        if(!persona.getProvincia().equals(provincia)) return false;
-        if(!persona.getDireccion().equals(direccion)) return false;
-        if(!persona.getTelefono().equals(telefono)) return false;
-        if(!persona.getMail().equals(mail)) return false;
-        if(!persona.getFavorito().equals(favorito)) return false;
-        if(!persona.getNacimiento().equals(nacimiento)) return false;
-        if(!persona.getDonaciones().equals(donaciones)) return false;
+        if(p.nombre != null && !p.nombre.equals(nombre)) return false;
+        if(p.nombre == null && nombre != null) return false;
+        if(p.localidad != null && !p.localidad.equals(localidad)) return false;
+        if(p.localidad == null && localidad != null) return false;
+        if(p.provincia != null && !p.provincia.equals(provincia)) return false;
+        if(p.provincia == null && provincia != null) return false;
+        if(p.direccion != null && !p.direccion.equals(direccion)) return false;
+        if(p.direccion == null && direccion != null) return false;
+        if(p.telefono != null && !p.telefono.equals(telefono)) return false;
+        if(p.telefono == null && telefono != null) return false;
+        if(p.mail != null && !p.mail.equals(mail)) return false;
+        if(p.mail == null && mail != null) return false;
+        if(p.favorito != null && !p.favorito.equals(favorito)) return false;
+        if(p.favorito == null && favorito != null) return false;
+        if(p.nacimiento != null && !p.nacimiento.equals(nacimiento)) return false;
+        if(p.nacimiento == null && nacimiento != null) return false;
+        if(p.donaciones != null && !p.donaciones.equals(donaciones)) return false;
+        if(p.donaciones == null && donaciones != null) return false;
+        if(p.sangre != null && !p.sangre.equals(sangre)) return false;
+        if(p.sangre == null && sangre != null) return false;
 
         return true;
     }
@@ -56,8 +71,8 @@ public class Persona {
     /**
      * Agrega una nueva donacion si no existe ya
      * @param donacion la {@link Donacion} a agregar
-     * @see quitarDonacion()
-     * @see getDonaciones()
+     * @see Persona#quitarDonacion
+     * @see Persona#getDonaciones
      */
     public void agregarDonacion(Donacion donacion) {
         if(donacion != null){
@@ -68,8 +83,8 @@ public class Persona {
     /**
      * Quita la donacion
      * @param donacion la {@link Donacion} a quitar
-     * @see agregarDonacion()
-     * @see getDonaciones()
+     * @see Persona#agregarDonacion
+     * @see Persona#getDonaciones
      */
     public void quitarDonacion(Donacion donacion) {
         donaciones.remove(donacion);
@@ -79,8 +94,8 @@ public class Persona {
      * Devuelve las donaciones realizadas por esta persona
      * @note retorna un Set no modificable (Collections.unmidifiableSet()}
      * @return Un Set no modificable de {@link Donacion}, las donaciones se pueden modificar pero no el Set
-     * @see agregarDonacion()
-     * @see quitarDonacion()
+     * @see Persona#agregarDonacion
+     * @see Persona#quitarDonacion
      */
     public Set<Donacion> getDonaciones() {
         return Collections.unmodifiableSet(donaciones);
@@ -148,5 +163,13 @@ public class Persona {
 
     public void setNacimiento(Date nacimiento) {
         this.nacimiento = nacimiento;
+    }
+
+    public Sangre getSangre() {
+    	return sangre;
+    }
+
+    public void setSangre(Sangre sangre) {
+    	this.sangre = sangre;
     }
 }

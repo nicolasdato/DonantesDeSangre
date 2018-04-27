@@ -5,19 +5,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link getInstance()} para obtener la instancia
+ * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
  */
 public class DonantesDeSangre {
     private static DonantesDeSangre instancia;
 
     /**
-     * Yo esta incluido dentro de {@link donantes}
+     * Yo esta incluido dentro de {@link DonantesDeSangre#getDonantes}
      */
     private Persona yo;
     private Set<Persona> donantes;
     /**
-     * Usar {@link getInstance()} para obtener la instancia
-     * @see getInstance()
+     * Usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
+     * @see DonantesDeSangre#getInstance()
      */
     private DonantesDeSangre() {
         donantes = new HashSet<>();
@@ -34,10 +34,10 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Agrega un nuevo donante, si ya existe. Se puede quitar con {@link quitarDonante()}.
+     * Agrega un nuevo donante, si ya existe. Se puede quitar con {@link DonantesDeSangre#quitarDonante}.
      * @param persona el donante a agregar
-     * @see quitarDonante()
-     * @see getDonantes()
+     * @see DonantesDeSangre#quitarDonante
+     * @see DonantesDeSangre#getDonantes()
      */
     public void agregarDonante(Persona persona) {
         if(persona != null) {
@@ -46,11 +46,11 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Quita un donante agregado con {@link agregarDonante()}
+     * Quita un donante agregado con {@link DonantesDeSangre#agregarDonante}
      * @param persona el donante a quitar
-     * @see agregarDonante()
-     * @see getYo()
-     * @see getDonantes()
+     * @see DonantesDeSangre#agregarDonante
+     * @see DonantesDeSangre#getYo()
+     * @see DonantesDeSangre#getDonantes()
      *
      */
     public void quitarDonante(Persona persona) {
@@ -59,12 +59,12 @@ public class DonantesDeSangre {
 
     /**
      * Retorna la lista de personas.
-     * Para saber cual es Yo, usar {@link getYo()}
+     * Para saber cual es Yo, usar {@link DonantesDeSangre#getYo()}
      * @note retorna un Set no modificable (Collections.unmidifiableSet()}
      * @returns Un Set no modificable de {@link Persona}, las personas se pueden modificar pero no el Set
-     * @see agregarDonante()
-     * @see quitarDonante()
-     * @see getYo()
+     * @see DonantesDeSangre#agregarDonante
+     * @see DonantesDeSangre#quitarDonante
+     * @see DonantesDeSangre#getYo()
      * @see Persona
      */
     public Set<Persona> getDonantes() {
@@ -72,10 +72,10 @@ public class DonantesDeSangre {
     }
 
     /**
-     * La {@link Persona} Yo tambien esta en {@link getDonantes()}
+     * La {@link Persona} Yo tambien esta en {@link DonantesDeSangre#getDonantes()}
      * @return la persona asociada a Yo, o null si no fue asignada aun
-     * @see setYo()
-     * @see getDonantes()
+     * @see DonantesDeSangre#setYo
+     * @see DonantesDeSangre#getDonantes
      */
     public Persona getYo() {
         return yo;
@@ -84,7 +84,7 @@ public class DonantesDeSangre {
     /**
      * Asocia la persona a Yo. Si persona no esta en donantes es agregada.
      * @param persona
-     * @see getYo()
+     * @see DonantesDeSangre#getYo
      */
     public void setYo(Persona persona) {
         if(persona != null) {
@@ -113,7 +113,7 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Busca dentro de los donantes agregados con {@link agregarDonante()} los que apliquen al criterio de busqueda
+     * Busca dentro de los donantes agregados con {@link DonantesDeSangre#agregarDonante} los que apliquen al criterio de busqueda
      * @param busqueda el criterio de busqueda a aplicar
      * @return Un Set de {@link Persona} que cumplieron el criterio de busqueda
      * @see Persona
@@ -132,11 +132,11 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Reemplaza todos los datos por los nuevos. Para mezclar los datos usar {@link mezclar()}. Para exportar los datos usar {@link exportar()}
+     * Reemplaza todos los datos por los nuevos. Para mezclar los datos usar {@link DonantesDeSangre#mezclar}. Para exportar los datos usar {@link DonantesDeSangre#exportar}
      * @param datos de donde obtener los nuevos datos
      * @see Datos
-     * @see mezclar()
-     * @see exportar()
+     * @see DonantesDeSangre#mezclar
+     * @see DonantesDeSangre#exportar
      */
     public void importar(Datos datos) {
         if(datos != null) {
@@ -148,11 +148,11 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Guarda los datos. Para mezclar los datos usar {@link mezclar()}. Para importar los datos usar {@link importar()}
+     * Guarda los datos. Para mezclar los datos usar {@link DonantesDeSangre#mezclar}. Para importar los datos usar {@link DonantesDeSangre#importar}
      * @param datos de donde obtener los nuevos datos
      * @see Datos
-     * @see mezclar()
-     * @see importar()
+     * @see DonantesDeSangre#mezclar
+     * @see DonantesDeSangre#importar
      */
     public void exportar(Datos datos) {
         if(datos != null) {
@@ -161,11 +161,11 @@ public class DonantesDeSangre {
     }
 
     /**
-     * Mezcla los datos importados con los ya existentes. Para reemplazar los datos usar {@link importar()}. Para exportar los datos usar {@link exportar()}
+     * Mezcla los datos importados con los ya existentes. Para reemplazar los datos usar {@link DonantesDeSangre#importar}. Para exportar los datos usar {@link DonantesDeSangre#exportar}
      * @param datos de donde obtener los nuevos datos
      * @see Datos
-     * @see importar()
-     * @see exportar()
+     * @see DonantesDeSangre#importar
+     * @see DonantesDeSangre#exportar
      */
     public void mezclar(Datos datos) {
         if(datos != null) {
