@@ -10,13 +10,13 @@ public class ARhN extends SangreEquals {
 	}
 
 	@Override
-	public VisitorDonarA getVisitorDonarA() {
-		return new VisitorARhNDonarA();
+	public VisitorDonaA getVisitorDonaA() {
+		return new VisitorARhNDonaA();
 	}
 
 	@Override
-	public VisitorRecibirDe getVisitorRecibirDe() {
-		return new VisitorARhNRecibirDe();
+	public VisitorRecibeDe getVisitorRecibeDe() {
+		return new VisitorARhNRecibeDe();
 	}
 
 	@Override

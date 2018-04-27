@@ -13,10 +13,10 @@ public interface Sangre {
 	/**
 	 * @return un nuevo visitor que evaluara si esta sangre puede donarse a alguien con la sangre de destino
 	 */
-	VisitorDonarA getVisitorDonarA();
+	VisitorDonaA getVisitorDonaA();
 
 	/**
 	 * @return un nuevo visitor que evaluara si esta sangre puede recibir a la sangre de destino
 	 */
-	VisitorRecibirDe getVisitorRecibirDe();
+	VisitorRecibeDe getVisitorRecibeDe();
 }
