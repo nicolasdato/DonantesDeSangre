@@ -8,6 +8,7 @@ import ar.ndato.donantesdesangre.sangre.BRhN;
 import ar.ndato.donantesdesangre.sangre.BRhP;
 import ar.ndato.donantesdesangre.sangre.ORhN;
 import ar.ndato.donantesdesangre.sangre.ORhP;
+import ar.ndato.donantesdesangre.Estadistica;
 
 /**
  * Obtiene estadisticas. Para usarlo crear un nuevo {@link VisitorEstadistica} y visitar todas las sangres con el mismo visitor. Al terminar obtener las estadisticas con {@link VisitorEstadistica#getEstadistica()}
