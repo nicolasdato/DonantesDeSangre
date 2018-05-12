@@ -57,7 +57,7 @@ public class SangreTest {
 
         int i, j;
         for(i = 0; i < sangres.length; i++){
-        	for(j = 0; j < sangres.length; i++) {
+        	for(j = 0; j < sangres.length; j++) {
 				visitorDonaA = sangres[i].getVisitorDonaA();
 				sangres[j].accept(visitorDonaA);
 				assertEquals(compatibilidades[i][j], visitorDonaA.puedeDonar());
