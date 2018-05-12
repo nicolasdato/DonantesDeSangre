@@ -1,7 +1,7 @@
 package ar.ndato.donantesdesangre.visitor;
 
 public abstract class VisitorDonaA implements VisitorSangre {
-	private Boolean puede;
+	protected Boolean puede;
 
 	public VisitorDonaA() {
 		puede = false;
