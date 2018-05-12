@@ -1,8 +1,7 @@
 package ar.ndato.donantesdesangre.sangre;
 
 public abstract class SangreEquals implements Sangre {
-
-	@Override
+	
 	public abstract String toString();
 
 	@Override
