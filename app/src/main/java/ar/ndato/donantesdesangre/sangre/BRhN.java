@@ -22,6 +22,6 @@ public class BRhN extends SangreEquals {
 
 	@Override
 	public String toString() {
-		return "B-;
+		return "B-";
 	}
 }
