@@ -1,5 +1,7 @@
 package ar.ndato.donantesdesangre.sangre;
 
+import ar.ndato.donantesdesangre.visitor.*;
+
 public interface Sangre {
 
 	@Override

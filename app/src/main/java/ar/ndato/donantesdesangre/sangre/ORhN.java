@@ -1,4 +1,5 @@
 package ar.ndato.donantesdesangre.sangre;
+import ar.ndato.donantesdesangre.visitor.*;
 
 public class ORhN extends SangreEquals {
 
