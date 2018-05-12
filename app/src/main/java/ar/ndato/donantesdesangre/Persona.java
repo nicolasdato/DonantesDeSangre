@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import ar.ndato.donantesdesangre.ar.ndato.donantesdesangre.sangre.Sangre;
+import ar.ndato.donantesdesangre.sangre.Sangre;
 
 /**
  * Clase para modelar los donantes

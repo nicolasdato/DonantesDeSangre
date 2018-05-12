@@ -3,6 +3,7 @@ package ar.ndato.donantesdesangre;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import ar.ndato.donantesdesangre.visitor.VisitorEstadistica;
 
 /**
  * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
