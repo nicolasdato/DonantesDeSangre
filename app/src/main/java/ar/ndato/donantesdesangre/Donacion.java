@@ -1,15 +1,15 @@
 package ar.ndato.donantesdesangre;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Donaciones que se usan en {@link Persona}
  */
 public class Donacion {
     private Persona receptor;
-	private Date fecha;
+	private Calendar fecha;
 
-	public Donacion(Persona receptor, Date fecha) {
+	public Donacion(Persona receptor, Calendar fecha) {
 		this.receptor = receptor;
 		this.fecha = fecha;
 	}
@@ -50,7 +50,7 @@ public class Donacion {
 	 * @return la fecha que se realizo la donacion
 	 * @see Donacion#setFecha
 	 */
-	public Date getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
 
@@ -58,7 +58,7 @@ public class Donacion {
 	 * @param fecha la fecha que se realizo la donacion
 	 * @see Donacion#getFecha
 	 */
-	public void setFecha(Date fecha) {
+	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
 	}
 }
