@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import ar.ndato.donantesdesangre.visitor.VisitorEstadistica;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
+import ar.ndato.donantesdesangre.datos.Datos;
 
 /**
  * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
@@ -57,6 +58,8 @@ public class DonantesDeSangre {
      */
     public void quitarDonante(Persona persona) {
         donantes.remove(persona);
+        if(persona == yo)
+        	yo = null;
     }
 
     /**

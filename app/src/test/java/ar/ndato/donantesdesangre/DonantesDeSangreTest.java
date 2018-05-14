@@ -1,8 +1,27 @@
 package ar.ndato.donantesdesangre;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
-import java.util.Date;
+
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Set;
+
+import ar.ndato.donantesdesangre.busqueda.Busqueda;
+import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
+import ar.ndato.donantesdesangre.busqueda.BusquedaEsFavorito;
+import ar.ndato.donantesdesangre.busqueda.BusquedaLocalidad;
+import ar.ndato.donantesdesangre.busqueda.BusquedaProvincia;
+import ar.ndato.donantesdesangre.busqueda.BusquedaPuedeRecibirDe;
+import ar.ndato.donantesdesangre.factory.ABRhPFactory;
+import ar.ndato.donantesdesangre.factory.ARhPFactory;
+import ar.ndato.donantesdesangre.factory.BRhNFactory;
+import ar.ndato.donantesdesangre.factory.ORhPFactory;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class DonantesDeSangreTest {
     private DonantesDeSangre donantesDeSangre;
@@ -10,14 +29,14 @@ public class DonantesDeSangreTest {
     @Test
     public void singletonTest() {
         DonantesDeSangre dds = null;
-        dds = DonantesDeSangre.getInstancia();
+        dds = DonantesDeSangre.getInstance();
         assertNotNull(dds);
-        assertTrue(dds == DonantesDeSangre.getInstancia());
+        assertTrue(dds == DonantesDeSangre.getInstance());
     }
 
     @Test
     public void donantesDeSangreTest() {
-        DonantesDeSangre dds = DonantesDeSangre.getInstancia();
+        DonantesDeSangre dds = DonantesDeSangre.getInstance();
         Persona yo;
         Persona p1;
         Persona p2;
@@ -30,28 +49,29 @@ public class DonantesDeSangreTest {
         Busqueda busquedaSangre;
 
         assertNull(dds.getYo());
-        assertNull(dds.getPersonas());
+        assertEquals(dds.getDonantes(), new HashSet<Persona>());
 
-        yo = new Persona("Yo", "l", "p", "d", "t", "m", true, new Date(), new ARhPFactory().crearSangre(), null);
+        yo = new Persona("Yo", "l", "p", "d", "t", "m", true, new GregorianCalendar(), new ARhPFactory().crearSangre());
         dds.setYo(yo);
-        assertTrue(p == dds.getYo());
+        assertTrue(yo == dds.getYo());
 
-        p1 = new Persona("Uno", "l", "p", "d", "t", "m", true, new Date(), new ORhPFactory().crearSangre(), null);
-        p2 = new Persona("Dos", "l", "p", "d", "t", "m", false, new Date(), new ABRhPFactory().crearSangre(), null);
-        p3 = new Persona("Tres", "L", "p", "d", "t", "m", false, new Date(), new ARhPFactory().crearSangre(), null);
-        p4 = new Persona("Cuatro", "L", "p", "d", "t", "m", true, new Date(), new BRhNFactory().crearSangre(), null);
-        p5 = new Persona("Cinco", "A", "P", "d", "t", "m", true, new Date(), new ARhPFactory().crearSangre(), null);
+        p1 = new Persona("Uno", "l", "p", "d", "t", "m", true, new GregorianCalendar(), new ORhPFactory().crearSangre());
+        p2 = new Persona("Dos", "l", "p", "d", "t", "m", false, new GregorianCalendar(), new ABRhPFactory().crearSangre());
+        p3 = new Persona("Tres", "L", "p", "d", "t", "m", false, new GregorianCalendar(), new ARhPFactory().crearSangre());
+        p4 = new Persona("Cuatro", "L", "p", "d", "t", "m", true, new GregorianCalendar(), new BRhNFactory().crearSangre());
+        p5 = new Persona("Cinco", "A", "P", "d", "t", "m", true, new GregorianCalendar(), new ARhPFactory().crearSangre());
         dds.agregarDonante(p1);
         dds.agregarDonante(p2);
         donantes = dds.getDonantes();
         assertNotNull(donantes);
         assertTrue(donantes.contains(p1));
         assertTrue(donantes.contains(p2));
-        assertEquals(donantes.size(), 2);
+        assertTrue(donantes.contains(yo));
+        assertEquals(donantes.size(), 3);
         dds.quitarDonante(p1);
         assertFalse(donantes.contains(p1));
         assertTrue(donantes.contains(p2));
-        assertEquals(donantes.size(), 1);
+        assertEquals(donantes.size(), 2);
         dds.agregarDonante(p1);
         dds.agregarDonante(p3);
         dds.agregarDonante(p4);
@@ -60,15 +80,15 @@ public class DonantesDeSangreTest {
         busquedaEstadistica = new BusquedaEsFavorito(new BusquedaLocalidad("l", new BusquedaBase()));
         estadistica = dds.getEstadistica(busquedaEstadistica);
         assertNotNull(estadistica);
-        assertEquals(estadistica.getTotal(), 2);
-        assertEquals(estadistica.getAP(), 1);
-        assertEquals(estadistica.getAN(), 0);
-        assertEquals(estadistica.getBP(), 0);
-        assertEquals(estadistica.getBN(), 0);
-        assertEquals(estadistica.getABP(), 0);
-        assertEquals(estadistica.getABN(), 0);
-        assertEquals(estadistica.getOP(), 1);
-        assertEquals(estadistica.getON(), 0);
+        assertTrue(estadistica.getTotal() == 2);
+        assertTrue(estadistica.getAp() == 1);
+        assertTrue(estadistica.getAn() == 0);
+        assertTrue(estadistica.getBp() == 0);
+        assertTrue(estadistica.getBn() == 0);
+        assertTrue(estadistica.getAbp() == 0);
+        assertTrue(estadistica.getAbn() == 0);
+        assertTrue(estadistica.getOp() == 1);
+        assertTrue(estadistica.getOn() == 0);
         busquedaSangre = new BusquedaPuedeRecibirDe(dds.getYo().getSangre(), new BusquedaProvincia("p", new BusquedaBase()));
         donantesBusqueda = dds.buscarDonantes(busquedaSangre);
         assertNotNull(donantesBusqueda);
