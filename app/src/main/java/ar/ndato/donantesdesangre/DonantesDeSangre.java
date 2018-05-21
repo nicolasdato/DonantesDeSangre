@@ -1,11 +1,15 @@
 package ar.ndato.donantesdesangre;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-import ar.ndato.donantesdesangre.visitor.VisitorEstadistica;
+
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
 import ar.ndato.donantesdesangre.datos.Datos;
+import ar.ndato.donantesdesangre.datos.DatosException;
+import ar.ndato.donantesdesangre.visitor.VisitorEstadistica;
 
 /**
  * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
@@ -17,13 +21,13 @@ public class DonantesDeSangre {
      * Yo esta incluido dentro de {@link DonantesDeSangre#getDonantes}
      */
     private Persona yo;
-    private Set<Persona> donantes;
+    private Map<Persona, Set<Donacion>> donantes;
     /**
      * Usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
      * @see DonantesDeSangre#getInstance()
      */
     private DonantesDeSangre() {
-        donantes = new HashSet<>();
+        donantes = new HashMap<Persona, Set<Donacion>>();
     }
 
     /**
@@ -43,8 +47,8 @@ public class DonantesDeSangre {
      * @see DonantesDeSangre#getDonantes()
      */
     public void agregarDonante(Persona persona) {
-        if(persona != null) {
-            donantes.add(persona);
+        if(persona != null && !donantes.containsKey(persona)) {
+            donantes.put(persona, new HashSet<Donacion>());
         }
     }
 
@@ -58,8 +62,9 @@ public class DonantesDeSangre {
      */
     public void quitarDonante(Persona persona) {
         donantes.remove(persona);
-        if(persona == yo)
-        	yo = null;
+        if(persona == yo) {
+            yo = null;
+        }
     }
 
     /**
@@ -73,7 +78,7 @@ public class DonantesDeSangre {
      * @see Persona
      */
     public Set<Persona> getDonantes() {
-        return Collections.unmodifiableSet(donantes);
+        return Collections.unmodifiableSet(donantes.keySet());
     }
 
     /**
@@ -93,7 +98,9 @@ public class DonantesDeSangre {
      */
     public void setYo(Persona persona) {
         if(persona != null) {
-            donantes.add(persona);
+        	if(!donantes.containsKey(persona)) {
+		        donantes.put(persona, new HashSet<Donacion>());
+	        }
             yo = persona;
         }
     }
@@ -108,7 +115,7 @@ public class DonantesDeSangre {
     public Estadistica getEstadistica(Busqueda busqueda) {
         VisitorEstadistica visitor = new VisitorEstadistica();
 
-        for(Persona p : donantes) {
+        for(Persona p : donantes.keySet()) {
             if(busqueda == null || busqueda.acepta(p)){
                 p.getSangre().accept(visitor);
             }
@@ -127,7 +134,7 @@ public class DonantesDeSangre {
     public Set<Persona> buscarDonantes(Busqueda busqueda) {
         Set<Persona> resultado = new HashSet<Persona>();
 
-        for(Persona p : donantes) {
+        for(Persona p : donantes.keySet()) {
             if(busqueda == null || busqueda.acepta(p)){
                 resultado.add(p);
             }
@@ -136,6 +143,71 @@ public class DonantesDeSangre {
         return resultado;
     }
 
+	/**
+	 * Agrega las donaciones a la persona
+	 *
+	 * @param donaciones una Collection de {@link Donacion} a agregar
+	 * @see DonantesDeSangre#agregarDonaciones
+	 * @see DonantesDeSangre#quitarDonacion
+	 * @see DonantesDeSangre#getDonaciones
+	 */
+	public void agregarDonaciones(Persona persona, Set<Donacion> donaciones) {
+		if (donaciones != null && persona != null) {
+			for(Donacion donacion : donaciones) {
+				agregarDonacion(persona, donacion);
+			}
+		}
+	}
+
+	/**
+	 * Agrega una nueva donacion
+	 *
+	 * @param donacion la {@link Donacion} a agregar
+	 * @see DonantesDeSangre#agregarDonaciones
+	 * @see DonantesDeSangre#quitarDonacion
+	 * @see DonantesDeSangre#getDonaciones
+	 */
+	public void agregarDonacion(Persona persona, Donacion donacion) {
+		if (donacion != null && persona != null) {
+			if(!donantes.containsKey(persona)) {
+				donantes.put(persona, new HashSet<Donacion>());
+			}
+			if(!donantes.containsKey(donacion.getReceptor())) {
+				donantes.put(donacion.getReceptor(), new HashSet<Donacion>());
+			}
+			donantes.get(persona).add(donacion);
+		}
+	}
+
+	/**
+	 * Quita la donacion
+	 *
+	 * @param donacion la {@link Donacion} a quitar
+	 * @see DonantesDeSangre#agregarDonacion
+	 * @see DonantesDeSangre#getDonaciones
+	 */
+	public void quitarDonacion(Persona persona, Donacion donacion) {
+		if(donantes.containsKey(persona)) {
+			donantes.get(persona).remove(donacion);
+		}
+	}
+
+	/**
+	 * Devuelve las donaciones realizadas por esta persona
+	 *
+	 * @return Un Set no modificable de {@link Donacion}, las donaciones se pueden modificar pero no el Set
+	 * @note retorna un Set no modificable (Collections.unmidifiableSet()}
+	 * @see DonantesDeSangre#agregarDonacion
+	 * @see DonantesDeSangre#quitarDonacion
+	 */
+	public Set<Donacion> getDonaciones(Persona persona) {
+		Set<Donacion> resultado = null;
+		if(donantes.containsKey(persona)){
+			resultado = Collections.unmodifiableSet(donantes.get(persona));
+		}
+		return resultado;
+	}
+
     /**
      * Reemplaza todos los datos por los nuevos. Para mezclar los datos usar {@link DonantesDeSangre#mezclar}. Para exportar los datos usar {@link DonantesDeSangre#exportar}
      * @param datos de donde obtener los nuevos datos
@@ -143,12 +215,18 @@ public class DonantesDeSangre {
      * @see DonantesDeSangre#mezclar
      * @see DonantesDeSangre#exportar
      */
-    public void importar(Datos datos) {
+    public void importar(Datos datos) throws DatosException {
         if(datos != null) {
             datos.leer();
-            donantes = datos.getDonantes();
-            yo = datos.getYo();
-            donantes.add(yo);
+            donantes = new HashMap<Persona, Set<Donacion>>();
+	        for(Persona persona : datos.getDonantes()) {
+		        agregarDonaciones(persona, datos.getDonaciones(persona));
+	        }
+	        Persona yo = datos.getYo();
+	        this.yo = yo;
+	        if(!donantes.containsKey(yo)) {
+		        donantes.put(yo, new HashSet<Donacion>());
+	        }
         }
     }
 
@@ -159,7 +237,7 @@ public class DonantesDeSangre {
      * @see DonantesDeSangre#mezclar
      * @see DonantesDeSangre#importar
      */
-    public void exportar(Datos datos) {
+    public void exportar(Datos datos) throws DatosException{
         if(datos != null) {
             datos.guardar(yo, donantes);
         }
@@ -172,13 +250,17 @@ public class DonantesDeSangre {
      * @see DonantesDeSangre#importar
      * @see DonantesDeSangre#exportar
      */
-    public void mezclar(Datos datos) {
+    public void mezclar(Datos datos) throws DatosException {
         if(datos != null) {
             datos.leer();
-            donantes.addAll(datos.getDonantes());
-            donantes.add(datos.getYo());
-            if(yo == null)
-                yo = datos.getYo();
+	        for(Persona persona : datos.getDonantes()) {
+	        	agregarDonaciones(persona, datos.getDonaciones(persona));
+	        }
+			Persona yo = datos.getYo();
+	        this.yo = yo;
+	        if(!donantes.containsKey(yo)) {
+		        donantes.put(yo, new HashSet<Donacion>());
+	        }
         }
     }
 

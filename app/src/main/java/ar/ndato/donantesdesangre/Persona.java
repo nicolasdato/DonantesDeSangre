@@ -1,9 +1,6 @@
 package ar.ndato.donantesdesangre;
 
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 import ar.ndato.donantesdesangre.sangre.Sangre;
 
@@ -19,8 +16,19 @@ public class Persona {
 	private String mail;
 	private Boolean favorito;
 	private Calendar nacimiento;
-	private Set<Donacion> donaciones;
 	private Sangre sangre;
+
+	public Persona(Persona persona) {
+		this.nombre = persona.getNombre();
+		this.localidad = persona.getLocalidad();
+		this.provincia = persona.getProvincia();
+		this.direccion = persona.getDireccion();
+		this.telefono = persona.getTelefono();
+		this.mail = persona.getMail();
+		this.favorito = persona.isFavorito();
+		this.nacimiento = persona.getNacimiento();
+		this.sangre = persona.getSangre();
+	}
 
 	public Persona(String nombre, String localidad, String provincia, String direccion, String telefono, String mail, Boolean favorito, Calendar nacimiento, Sangre sangre) {
 		this.nombre = nombre;
@@ -32,8 +40,6 @@ public class Persona {
 		this.favorito = favorito;
 		this.nacimiento = nacimiento;
 		this.sangre = sangre;
-
-		donaciones = new HashSet<Donacion>();
 	}
 
 	@Override
@@ -60,48 +66,10 @@ public class Persona {
 		if (p.favorito == null && favorito != null) return false;
 		if (p.nacimiento != null && !p.nacimiento.equals(nacimiento)) return false;
 		if (p.nacimiento == null && nacimiento != null) return false;
-		if (p.donaciones != null && !p.donaciones.equals(donaciones)) return false;
-		if (p.donaciones == null && donaciones != null) return false;
 		if (p.sangre != null && !p.sangre.equals(sangre)) return false;
 		if (p.sangre == null && sangre != null) return false;
 
 		return true;
-	}
-
-	/**
-	 * Agrega una nueva donacion si no existe ya
-	 *
-	 * @param donacion la {@link Donacion} a agregar
-	 * @see Persona#quitarDonacion
-	 * @see Persona#getDonaciones
-	 */
-	public void agregarDonacion(Donacion donacion) {
-		if (donacion != null) {
-			donaciones.add(donacion);
-		}
-	}
-
-	/**
-	 * Quita la donacion
-	 *
-	 * @param donacion la {@link Donacion} a quitar
-	 * @see Persona#agregarDonacion
-	 * @see Persona#getDonaciones
-	 */
-	public void quitarDonacion(Donacion donacion) {
-		donaciones.remove(donacion);
-	}
-
-	/**
-	 * Devuelve las donaciones realizadas por esta persona
-	 *
-	 * @return Un Set no modificable de {@link Donacion}, las donaciones se pueden modificar pero no el Set
-	 * @note retorna un Set no modificable (Collections.unmidifiableSet()}
-	 * @see Persona#agregarDonacion
-	 * @see Persona#quitarDonacion
-	 */
-	public Set<Donacion> getDonaciones() {
-		return Collections.unmodifiableSet(donaciones);
 	}
 
 	public String getNombre() {
