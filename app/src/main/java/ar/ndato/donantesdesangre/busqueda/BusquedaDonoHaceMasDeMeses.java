@@ -3,15 +3,18 @@ package ar.ndato.donantesdesangre.busqueda;
 import java.util.Calendar;
 
 import ar.ndato.donantesdesangre.Donacion;
+import ar.ndato.donantesdesangre.DonantesDeSangre;
 import ar.ndato.donantesdesangre.Persona;
 
 public class BusquedaDonoHaceMasDeMeses extends BusquedaCondicion {
 
 	private Integer meses;
+	private DonantesDeSangre donantesDeSangre;
 
-	public BusquedaDonoHaceMasDeMeses(Integer meses, Busqueda busqueda) {
+	public BusquedaDonoHaceMasDeMeses(Integer meses, DonantesDeSangre donantesDeSangre, Busqueda busqueda) {
 		super(busqueda);
 		this.meses = meses;
+		this.donantesDeSangre = donantesDeSangre;
 	}
 
 	@Override
@@ -19,10 +22,7 @@ public class BusquedaDonoHaceMasDeMeses extends BusquedaCondicion {
 		Calendar hoy = Calendar.getInstance();
 		Calendar ultimaDonacion = null;
 
-		if(persona.getDonaciones() == null || persona.getDonaciones().size() == 0)
-			return true;
-
-		for(Donacion donacion : persona.getDonaciones()){
+		for(Donacion donacion : donantesDeSangre.getDonaciones(persona)){
 			if(ultimaDonacion == null) {
 				ultimaDonacion = donacion.getFecha();
 			}

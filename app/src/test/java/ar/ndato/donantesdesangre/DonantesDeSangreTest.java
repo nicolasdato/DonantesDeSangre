@@ -2,6 +2,8 @@ package ar.ndato.donantesdesangre;
 
 import org.junit.Test;
 
+import java.io.File;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +14,9 @@ import ar.ndato.donantesdesangre.busqueda.BusquedaEsFavorito;
 import ar.ndato.donantesdesangre.busqueda.BusquedaLocalidad;
 import ar.ndato.donantesdesangre.busqueda.BusquedaProvincia;
 import ar.ndato.donantesdesangre.busqueda.BusquedaPuedeRecibirDe;
+import ar.ndato.donantesdesangre.datos.Datos;
+import ar.ndato.donantesdesangre.datos.DatosException;
+import ar.ndato.donantesdesangre.datos.DatosJson;
 import ar.ndato.donantesdesangre.factory.ABRhPFactory;
 import ar.ndato.donantesdesangre.factory.ARhPFactory;
 import ar.ndato.donantesdesangre.factory.BRhNFactory;
@@ -96,5 +101,36 @@ public class DonantesDeSangreTest {
         assertTrue(donantesBusqueda.contains(yo));
         assertTrue(donantesBusqueda.contains(p2));
         assertTrue(donantesBusqueda.contains(p3));
+
+        Donacion d1 = new Donacion(p2, Calendar.getInstance());
+        Donacion d2 = new Donacion(p3, Calendar.getInstance());
+        Donacion d3 = new Donacion(p1, Calendar.getInstance());
+        dds.agregarDonacion(p1, d1);
+        dds.agregarDonacion(p1, d2);
+        dds.agregarDonacion(p3, d3);
+
+        Set<Donacion> setD1 = new HashSet<Donacion>();
+        setD1.add(d1);
+        setD1.add(d2);
+        Set<Donacion> setD3 = new HashSet<Donacion>();
+        setD3.add(d3);
+        assertEquals(dds.getDonaciones(p1), setD1);
+        assertEquals(dds.getDonaciones(p3), setD3);
+        assertEquals(dds.getDonaciones(p2), new HashSet<Donacion>());
+        assertEquals(dds.getDonaciones(p4), new HashSet<Donacion>());
+
+	    try {
+		    dds.exportar(new DatosJson(new File("test.json")));
+		    Datos datos = new DatosJson(new File("test.json"));
+			datos.leer();
+			assertEquals(datos.getYo(), dds.getYo());
+			assertEquals(datos.getDonantes(), dds.getDonantes());
+			for(Persona persona : datos.getDonantes()) {
+				assertEquals(datos.getDonaciones(persona), dds.getDonaciones(persona));
+			}
+	    } catch (DatosException e) {
+		    assertFalse(true);
+	    }
+
     }
 }
