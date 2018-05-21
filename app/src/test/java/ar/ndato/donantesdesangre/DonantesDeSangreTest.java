@@ -2,7 +2,6 @@ package ar.ndato.donantesdesangre;
 
 import org.junit.Test;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -14,9 +13,6 @@ import ar.ndato.donantesdesangre.busqueda.BusquedaEsFavorito;
 import ar.ndato.donantesdesangre.busqueda.BusquedaLocalidad;
 import ar.ndato.donantesdesangre.busqueda.BusquedaProvincia;
 import ar.ndato.donantesdesangre.busqueda.BusquedaPuedeRecibirDe;
-import ar.ndato.donantesdesangre.datos.Datos;
-import ar.ndato.donantesdesangre.datos.DatosException;
-import ar.ndato.donantesdesangre.datos.DatosJson;
 import ar.ndato.donantesdesangre.factory.ABRhPFactory;
 import ar.ndato.donantesdesangre.factory.ARhPFactory;
 import ar.ndato.donantesdesangre.factory.BRhNFactory;
@@ -119,7 +115,7 @@ public class DonantesDeSangreTest {
         assertEquals(dds.getDonaciones(p2), new HashSet<Donacion>());
         assertEquals(dds.getDonaciones(p4), new HashSet<Donacion>());
 
-	    try {
+	    /*try {
 		    dds.exportar(new DatosJson(new File("test.json")));
 		    Datos datos = new DatosJson(new File("test.json"));
 			datos.leer();
@@ -130,7 +126,7 @@ public class DonantesDeSangreTest {
 			}
 	    } catch (DatosException e) {
 		    assertFalse(true);
-	    }
+	    }*/
 
     }
 }

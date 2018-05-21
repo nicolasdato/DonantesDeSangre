@@ -154,7 +154,7 @@ public class DatosJson implements Datos {
 			object.putOpt("telefono", persona.getTelefono());
 			object.putOpt("mail", persona.getMail());
 			object.putOpt("favorito", persona.isFavorito());
-			object.putOpt("nacimiento", dateFormat.format(persona.getNacimiento().toString()));
+			object.putOpt("nacimiento", dateFormat.format(persona.getNacimiento().getTime()));
 			object.putOpt("sangre", persona.getSangre().toString());
 		} catch (JSONException ex) {
 			throw new DatosException(ex.getMessage());
@@ -176,7 +176,7 @@ public class DatosJson implements Datos {
 		}
 		try {
 			object.putOpt("receptor", personaAJson(donacion.getReceptor()));
-			object.putOpt("fecha", dateFormat.format(donacion.getFecha()));
+			object.putOpt("fecha", dateFormat.format(donacion.getFecha().getTime()));
 		} catch (JSONException ex) {
 			throw new DatosException(ex.getMessage());
 		}
