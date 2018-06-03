@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Donantes De Sangre</string>
+    <string name="buscar_donante">Buscar donante</string>
+    <string name="agegar_donante">Agregar donante</string>
+    <string name="title_activity_agegar_donante">AgegarDonanteActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="informacion">Información</string>
+    <string name="agregar_donacion">Agregar donación</string>
+    <string name="estadistica">Estadística</string>
+    <string name="exportar">Exportar datos</string>
+    <string name="importar">Importar datos</string>
 </resources>

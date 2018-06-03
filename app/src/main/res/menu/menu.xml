@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res">
+    <item android:id="@+id/menu_informacion"
+          android:title="@string/informacion"
+          app:showAsAction="never"/>
+</menu>
