@@ -12,4 +12,9 @@ public abstract class SangreEquals implements Sangre {
 
 		return toString().equals(otro);
 	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
 }

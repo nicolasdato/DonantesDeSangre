@@ -6,6 +6,9 @@ public interface Sangre {
 
 	@Override
 	boolean equals(Object otro);
+	
+	@Override
+	int hashCode();
 
 	/**
 	 * @see VisitorSangre

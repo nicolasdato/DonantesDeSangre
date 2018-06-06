@@ -71,6 +71,11 @@ public class Persona {
 
 		return true;
 	}
+	
+	@Override
+	public int hashCode() {
+		return nombre.hashCode() ^ sangre.hashCode();
+	}
 
 	public String getNombre() {
 		return nombre;

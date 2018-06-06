@@ -3,7 +3,7 @@ package ar.ndato.donantesdesangre;
 import java.util.Calendar;
 
 /**
- * Donaciones que se usan en {@link Persona}
+ * Donaciones que se usan en {@link DonantesDeSangre}
  */
 public class Donacion {
     private Persona receptor;
@@ -28,6 +28,11 @@ public class Donacion {
 		if(d.receptor == null && receptor != null) return false;
 
 		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return fecha.hashCode() ^ receptor.hashCode();
 	}
 
 	/**

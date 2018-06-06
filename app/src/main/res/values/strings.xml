@@ -9,4 +9,43 @@
     <string name="estadistica">Estadística</string>
     <string name="exportar">Exportar datos</string>
     <string name="importar">Importar datos</string>
+    <string name="direccion">Dirección</string>
+    <string name="nacimiento">Nacimiento</string>
+    <string name="nombre">Nombre</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="provincia">Provincia</string>
+    <string name="telefono">Teléfono</string>
+    <string name="localidad">Localidad</string>
+    <string name="agregado_correcto">Donante agregado</string>
+    <string name="falta_nombre">Falta completar el nombre</string>
+    <string name="persona_existente">La persona ya existe</string>
+    <string name="archivo_interno">donantesDeSangre.json</string>
+    <string name="tabla_compatibilidad">Compatibilidad de la sangre</string>
+    <string name="title_activity_calendario">CalendarioActivity</string>
+    <string name="ok">OK</string>
+    <string name="sangre">Sangre</string>
+    <string-array name="meses">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
+    <string-array name="sangres">
+        <item>O-</item>
+        <item>O+</item>
+        <item>A-</item>
+        <item>A+</item>
+        <item>B-</item>
+        <item>B+</item>
+        <item>AB-</item>
+        <item>AB+</item>
+    </string-array>
 </resources>

@@ -2,41 +2,44 @@ package ar.ndato.donantesdesangre.vista;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends ActividadPersistente {
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	}
-
+	
 	public void agregarDonante(View view) {
 		Intent intent = new Intent(this, AgegarDonanteActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, 0);
 	}
-
+	
 	public void buscarDonante(View view) {
 		/*Intent intent = new Intent(this, BuscarDonanteActivity.class);
 		startActivity(intent);*/
 	}
-
+	
 	public void agregarDonacion(View view) {
 		/*Intent intent = new Intent(this, AgregarDonacionActivity.class);
 		startActivity(intent);*/
 	}
-
+	
 	public void estadisticas(View view) {
 		/*Intent intent = new Intent(this, EstadisticasActivity.class);
 		startActivity(intent);*/
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu, menu);
-		return true;
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK && data != null) {
+			int resultado;
+			resultado = data.getExtras().getInt("texto");
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);
+			mensaje.show();
+		}
 	}
 }

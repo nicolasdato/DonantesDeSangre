@@ -3,4 +3,7 @@
     <item android:id="@+id/menu_informacion"
           android:title="@string/informacion"
           app:showAsAction="never"/>
+    <item android:id="@+id/menu_tabla_compatibilidad"
+        android:title="@string/tabla_compatibilidad"
+        app:showAsAction="never"/>
 </menu>
