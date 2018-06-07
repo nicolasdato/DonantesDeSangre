@@ -1,5 +1,7 @@
 package ar.ndato.donantesdesangre.vista;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -19,7 +21,9 @@ import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.factory.AbstractSangreFactory;
 import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 
-public class AgregarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
+public class AgregarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener, DialogInterface.OnClickListener {
+	
+	private Boolean agregarYo = false;
 	
 	private void actualizarCantidadDeDias(Spinner dia, Integer anio, Integer mes) {
 		Integer maxDias;
@@ -31,6 +35,17 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		}
 		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dias);
 		dia.setAdapter(diasAdapter);
+	}
+	@Override
+	public void onSaveInstanceState(Bundle bundle) {
+		super.onSaveInstanceState(bundle);
+		bundle.putBoolean("agregarYo", agregarYo);
+	}
+	
+	@Override
+	public void onRestoreInstanceState(Bundle bundle) {
+		super.onRestoreInstanceState(bundle);
+		agregarYo = bundle.getBoolean("agregarYo");
 	}
 	
 	@Override
@@ -55,6 +70,16 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
+		
+		if (DonantesDeSangre.getInstance().getYo() == null) {
+			agregarYo = true;
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setMessage(R.string.crear_yo);
+			dialog.setTitle(R.string.crear_yo_title);
+			dialog.setCancelable(false);
+			dialog.setPositiveButton(R.string.ok, this);
+			dialog.create().show();
+		}
 	}
 	
 	public void agregarDonante(View view) {
@@ -85,6 +110,9 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			}
 			else {
 				donantesDeSangre.agregarDonante(persona);
+				if (agregarYo) {
+					donantesDeSangre.setYo(persona);
+				}
 				Intent intent = new Intent();
 				intent.putExtra("texto", R.string.agregado_correcto);
 				setResult(RESULT_OK, intent);
@@ -112,5 +140,10 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
 	
+	}
+	
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		dialog.dismiss();
 	}
 }

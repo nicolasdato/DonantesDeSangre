@@ -24,6 +24,8 @@
     <string name="title_activity_calendario">CalendarioActivity</string>
     <string name="ok">OK</string>
     <string name="sangre">Sangre</string>
+    <string name="crear_yo">Primero hace falta cargar tus datos antes de crear nuevos donantes</string>
+    <string name="crear_yo_title">Completa con tus datos</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>
