@@ -14,7 +14,7 @@ public class MainActivity extends ActividadPersistente {
 	}
 	
 	public void agregarDonante(View view) {
-		Intent intent = new Intent(this, AgegarDonanteActivity.class);
+		Intent intent = new Intent(this, AgregarDonanteActivity.class);
 		startActivityForResult(intent, 0);
 	}
 	

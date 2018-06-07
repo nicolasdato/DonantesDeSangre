@@ -10,7 +10,7 @@ public abstract class SangreEquals implements Sangre {
 		if(otro == this) return true;
 		if(!(otro instanceof Sangre)) return false;
 
-		return toString().equals(otro);
+		return toString().equals(otro.toString());
 	}
 	
 	@Override

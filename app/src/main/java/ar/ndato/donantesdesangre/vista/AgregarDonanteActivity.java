@@ -8,12 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,19 +19,17 @@ import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.factory.AbstractSangreFactory;
 import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 
-public class AgegarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
-
-	private final int CALENDARIO_RESULTADO = 0;
+public class AgregarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
 	
 	private void actualizarCantidadDeDias(Spinner dia, Integer anio, Integer mes) {
-		Integer maxDias = 0;
-		Calendar calendar = new GregorianCalendar(mes, anio, 1);
+		Integer maxDias;
+		Calendar calendar = new GregorianCalendar(anio, mes, 1);
 		maxDias = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		List<Integer> dias = new ArrayList<>();
 		for (Integer d = 1; d <= maxDias; d++) {
 			dias.add(d);
 		}
-		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, R.layout.activity_agegar_donante, dias);
+		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dias);
 		dia.setAdapter(diasAdapter);
 	}
 	
@@ -51,7 +44,7 @@ public class AgegarDonanteActivity extends ActividadPersistente implements Adapt
 		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
 			anios.add(a);
 		}
-		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, R.layout.activity_agegar_donante, anios);
+		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, anios);
 		anio.setAdapter(aniosAdapter);
 		anio.setSelection(0);
 		Spinner mes = findViewById(R.id.mes);
@@ -102,10 +95,10 @@ public class AgegarDonanteActivity extends ActividadPersistente implements Adapt
 	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		if (view.getId() == R.id.mes || view.getId() == R.id.anio) {
+		if (parent.getId() == R.id.mes || parent.getId() == R.id.anio) {
 			Spinner mes = findViewById(R.id.mes);
 			Spinner anio = findViewById(R.id.anio);
-			Spinner dia = findViewById(R.id.anio);
+			Spinner dia = findViewById(R.id.dia);
 			Integer seleccionado = dia.getSelectedItemPosition();
 			actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
 			if(dia.getAdapter().getCount() > seleccionado) {
