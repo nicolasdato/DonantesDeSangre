@@ -24,13 +24,14 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <!--
         <activity android:name=".BuscarDonanteActivity"
             android:parentActivityName=".MainActivity" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
+        <!--
         <activity android:name=".AgregarDonacionActivity"
             android:parentActivityName=".MainActivity" >
             <meta-data android:name="android.support.PARENT_ACTIVITY"

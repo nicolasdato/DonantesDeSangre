@@ -1,6 +1,8 @@
 package ar.ndato.donantesdesangre.sangre;
 
-public abstract class SangreEquals implements Sangre {
+import java.io.Serializable;
+
+public abstract class SangreEquals implements Sangre, Serializable {
 	
 	public abstract String toString();
 

@@ -13,23 +13,38 @@ import ar.ndato.donantesdesangre.datos.DatosJson;
 
 public abstract class ActividadPersistente extends AppCompatActivity {
 	
+	private DonantesDeSangre donantesDeSangre;
+	
+	public void setDonantesDeSangre(DonantesDeSangre donantesDeSangre) {
+		this.donantesDeSangre = donantesDeSangre;
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		guardar(donantesDeSangre);
+	}
+	
 	@Override
 	public void onSaveInstanceState(Bundle bundle) {
 		super.onSaveInstanceState(bundle);
-		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
-		DonantesDeSangre donantesDeSangre = DonantesDeSangre.getInstance();
-		try {
-			Datos datos = new DatosJson(archivo);
-			donantesDeSangre.exportar(datos);
-		} catch (DatosException ex) {
-		
-		}
+		guardar(donantesDeSangre);
 	}
 	
 	@Override
 	public void onRestoreInstanceState(Bundle bundle) {
 		super.onRestoreInstanceState(bundle);
-		DonantesDeSangre donantesDeSangre = DonantesDeSangre.getInstance();
+		cargar(donantesDeSangre);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+	
+	public void cargar(DonantesDeSangre donantesDeSangre) {
 		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
 		if (archivo.exists() && archivo.canRead()) {
 			try {
@@ -41,10 +56,13 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 		}
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.menu, menu);
-		return true;
+	public void guardar(DonantesDeSangre donantesDeSangre) {
+		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
+		try {
+			Datos datos = new DatosJson(archivo);
+			donantesDeSangre.exportar(datos);
+		} catch (DatosException ex) {
+		
+		}
 	}
 }

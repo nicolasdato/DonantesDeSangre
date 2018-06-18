@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuscarDonanteActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/nombre"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/localidad"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/switch_nombre"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/provincia"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/provincia"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/switch_provincia"
+                app:layout_constraintTop_toBottomOf="@+id/localidad" />
+
+            <EditText
+                android:id="@+id/localidad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/localidad"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/provincia"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/switch_localidad"
+                app:layout_constraintTop_toBottomOf="@+id/nombre" />
+
+            <Spinner
+                android:id="@+id/sangre"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:entries="@array/sangres"
+                app:layout_constraintBottom_toBottomOf="@+id/switch_recibir_de"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/switch_recibir_de"
+                app:layout_constraintTop_toTopOf="@+id/switch_donar_a" />
+
+            <Switch
+                android:id="@+id/switch_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/no"
+                android:textOff="@string/no"
+                android:textOn="@string/si"
+                app:layout_constraintBottom_toTopOf="@+id/localidad"
+                app:layout_constraintEnd_toStartOf="@+id/nombre"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nombre" />
+
+            <Switch
+                android:id="@+id/switch_localidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/no"
+                android:textOff="@string/no"
+                android:textOn="@string/si"
+                app:layout_constraintBottom_toBottomOf="@+id/localidad"
+                app:layout_constraintEnd_toStartOf="@+id/localidad"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/localidad" />
+
+            <Switch
+                android:id="@+id/switch_provincia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/no"
+                android:textOff="@string/no"
+                android:textOn="@string/si"
+                app:layout_constraintBottom_toBottomOf="@+id/provincia"
+                app:layout_constraintEnd_toStartOf="@+id/provincia"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/provincia" />
+
+            <EditText
+                android:id="@+id/edad"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/edad"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/switch_edad_mayor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/switch_edad_menor"
+                app:layout_constraintTop_toTopOf="@+id/switch_edad_menor" />
+
+            <Switch
+                android:id="@+id/switch_edad_menor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/edad_menor_a"
+                app:layout_constraintBottom_toTopOf="@+id/switch_edad_mayor"
+                app:layout_constraintEnd_toEndOf="@+id/switch_edad_mayor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_provincia" />
+
+            <Switch
+                android:id="@+id/switch_donar_a"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/puede_donar_a"
+                app:layout_constraintBottom_toTopOf="@+id/switch_recibir_de"
+                app:layout_constraintEnd_toEndOf="@+id/switch_recibir_de"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_edad_mayor" />
+
+            <Switch
+                android:id="@+id/switch_edad_mayor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/edad_mayor_a"
+                app:layout_constraintBottom_toTopOf="@+id/switch_donar_a"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch_edad_menor" />
+
+            <Switch
+                android:id="@+id/switch_recibir_de"
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:checked="false"
+                android:onClick="clickSwitch"
+                android:text="@string/puede_recibir_de"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/boton_buscar_persona"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:onClick="buscarDonante"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -26,6 +26,13 @@
     <string name="sangre">Sangre</string>
     <string name="crear_yo">Primero hace falta cargar tus datos antes de crear nuevos donantes</string>
     <string name="crear_yo_title">Completa con tus datos</string>
+    <string name="edad">Edad</string>
+    <string name="puede_donar_a">Puede donar a</string>
+    <string name="puede_recibir_de">Puede recibir de</string>
+    <string name="edad_mayor_a">Edad mayor a</string>
+    <string name="edad_menor_a">Edad menor a</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>

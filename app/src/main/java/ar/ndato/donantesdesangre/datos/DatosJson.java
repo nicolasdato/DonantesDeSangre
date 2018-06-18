@@ -111,6 +111,7 @@ public class DatosJson implements Datos {
 			object.put("donantes", arrayDonantes);
 			writer = new FileWriter(archivo);
 			writer.write(object.toString());
+			writer.close();
 		} catch(DatosException | JSONException | IOException ex) {
 			throw new DatosException(ex.getMessage());
 		}

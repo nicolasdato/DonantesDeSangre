@@ -1,5 +1,6 @@
 package ar.ndato.donantesdesangre;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import ar.ndato.donantesdesangre.sangre.Sangre;
@@ -7,7 +8,7 @@ import ar.ndato.donantesdesangre.sangre.Sangre;
 /**
  * Clase para modelar los donantes
  */
-public class Persona {
+public class Persona implements Serializable {
 	private String nombre;
 	private String localidad;
 	private String provincia;

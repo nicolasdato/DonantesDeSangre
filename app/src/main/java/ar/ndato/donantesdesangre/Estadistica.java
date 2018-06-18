@@ -1,7 +1,7 @@
 package ar.ndato.donantesdesangre;
 
 /**
- * Clase estadistica que retorna el {@link VisitorEstadistica}
+ * Clase estadistica que retorna el {@link ar.ndato.donantesdesangre.visitor.VisitorEstadistica}
  */
 public class Estadistica {
 	private Integer total;

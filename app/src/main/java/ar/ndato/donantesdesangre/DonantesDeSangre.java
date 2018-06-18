@@ -1,5 +1,6 @@
 package ar.ndato.donantesdesangre;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,7 +15,7 @@ import ar.ndato.donantesdesangre.visitor.VisitorEstadistica;
 /**
  * Clase principal para acceder y manejar todos los donantes y donaciones, usar {@link DonantesDeSangre#getInstance()} para obtener la instancia
  */
-public class DonantesDeSangre {
+public class DonantesDeSangre implements Serializable {
     private static DonantesDeSangre instancia;
 
     /**
@@ -237,7 +238,7 @@ public class DonantesDeSangre {
      * @see DonantesDeSangre#mezclar
      * @see DonantesDeSangre#importar
      */
-    public void exportar(Datos datos) throws DatosException{
+    public void exportar(Datos datos) throws DatosException {
         if(datos != null) {
             datos.guardar(yo, donantes);
         }

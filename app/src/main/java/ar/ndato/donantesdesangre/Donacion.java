@@ -1,11 +1,12 @@
 package ar.ndato.donantesdesangre;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Donaciones que se usan en {@link DonantesDeSangre}
  */
-public class Donacion {
+public class Donacion implements Serializable {
     private Persona receptor;
 	private Calendar fecha;
 

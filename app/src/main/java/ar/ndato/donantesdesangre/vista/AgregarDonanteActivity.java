@@ -24,6 +24,45 @@ import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 public class AgregarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener, DialogInterface.OnClickListener {
 	
 	private Boolean agregarYo = false;
+	private DonantesDeSangre donantesDeSangre;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_agegar_donante);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		findViewById(R.id.boton_agregar_persona).requestFocus();
+		Spinner anio = findViewById(R.id.anio);
+		List<Integer> anios = new ArrayList<>();
+		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
+			anios.add(a);
+		}
+		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, anios);
+		anio.setAdapter(aniosAdapter);
+		anio.setSelection(0);
+		Spinner mes = findViewById(R.id.mes);
+		mes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
+		Spinner dia = findViewById(R.id.dia);
+		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
+		dia.setSelection(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+		
+		anio.setOnItemSelectedListener(this);
+		mes.setOnItemSelectedListener(this);
+		
+		donantesDeSangre = (DonantesDeSangre)getIntent().getSerializableExtra("donantesDeSangre");
+		super.setDonantesDeSangre(donantesDeSangre);
+		
+		if (donantesDeSangre.getYo() == null) {
+			agregarYo = true;
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setMessage(R.string.crear_yo);
+			dialog.setTitle(R.string.crear_yo_title);
+			dialog.setCancelable(false);
+			dialog.setPositiveButton(R.string.ok, this);
+			dialog.create().show();
+		}
+	}
 	
 	private void actualizarCantidadDeDias(Spinner dia, Integer anio, Integer mes) {
 		Integer maxDias;
@@ -48,40 +87,6 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		agregarYo = bundle.getBoolean("agregarYo");
 	}
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_agegar_donante);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		findViewById(R.id.boton_agregar_persona).requestFocus();
-		Spinner anio = findViewById(R.id.anio);
-		List<Integer> anios = new ArrayList<>();
-		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
-			anios.add(a);
-		}
-		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, anios);
-		anio.setAdapter(aniosAdapter);
-		anio.setSelection(0);
-		Spinner mes = findViewById(R.id.mes);
-		mes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
-		Spinner dia = findViewById(R.id.dia);
-		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
-		dia.setSelection(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
-		
-		anio.setOnItemSelectedListener(this);
-		mes.setOnItemSelectedListener(this);
-		
-		if (DonantesDeSangre.getInstance().getYo() == null) {
-			agregarYo = true;
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setMessage(R.string.crear_yo);
-			dialog.setTitle(R.string.crear_yo_title);
-			dialog.setCancelable(false);
-			dialog.setPositiveButton(R.string.ok, this);
-			dialog.create().show();
-		}
-	}
-	
 	public void agregarDonante(View view) {
 		EditText nombre = findViewById(R.id.nombre);
 		EditText localidad = findViewById(R.id.localidad);
@@ -103,7 +108,6 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			Calendar calendario = new GregorianCalendar((Integer)anio.getSelectedItem(), mes.getSelectedItemPosition(), dia.getSelectedItemPosition() + 1);
 			Persona persona = new Persona(nombre.getText().toString(), localidad.getText().toString(), provincia.getText().toString(), direccion.getText().toString(),
 					telefono.getText().toString(), email.getText().toString(), false, calendario, sangreFactory.crearSangre());
-			DonantesDeSangre donantesDeSangre = DonantesDeSangre.getInstance();
 			if (donantesDeSangre.getDonantes().contains(persona)) {
 				Snackbar mensaje = Snackbar.make(view, R.string.persona_existente, Snackbar.LENGTH_LONG);
 				mensaje.show();
