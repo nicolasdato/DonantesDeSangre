@@ -1,21 +1,31 @@
 package ar.ndato.donantesdesangre.vista;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
-import ar.ndato.donantesdesangre.DonantesDeSangre;
+import ar.ndato.donantesdesangre.busqueda.Busqueda;
+import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
+import ar.ndato.donantesdesangre.busqueda.BusquedaEdadMayorA;
+import ar.ndato.donantesdesangre.busqueda.BusquedaEdadMenorA;
+import ar.ndato.donantesdesangre.busqueda.BusquedaLocalidad;
+import ar.ndato.donantesdesangre.busqueda.BusquedaNombre;
+import ar.ndato.donantesdesangre.busqueda.BusquedaProvincia;
+import ar.ndato.donantesdesangre.busqueda.BusquedaPuedeDonarA;
+import ar.ndato.donantesdesangre.busqueda.BusquedaPuedeRecibirDe;
+import ar.ndato.donantesdesangre.factory.AbstractSangreFactory;
+import ar.ndato.donantesdesangre.factory.SangreStringFactory;
+import ar.ndato.donantesdesangre.sangre.Sangre;
 
-public class BuscarDonanteActivity extends AppCompatActivity {
-	
-	private DonantesDeSangre donantesDeSangre;
+public class BuscarDonanteActivity extends ActividadBase {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar_donante);
-		donantesDeSangre = (DonantesDeSangre)getIntent().getSerializableExtra("donantesDeSangre");
 	}
 	
 	public void clickSwitch(View view) {
@@ -48,6 +58,50 @@ public class BuscarDonanteActivity extends AppCompatActivity {
 	}
 	
 	public void buscarDonante(View view) {
+		Busqueda busqueda = new BusquedaBase();
+		
+		Switch swNombre = findViewById(R.id.switch_nombre);
+		Switch swProvincia = findViewById(R.id.switch_provincia);
+		Switch swLocalidad = findViewById(R.id.switch_localidad);
+		Switch swMayorA = findViewById(R.id.switch_edad_mayor);
+		Switch swMenorA = findViewById(R.id.switch_edad_menor);
+		Switch swDonaA = findViewById(R.id.switch_donar_a);
+		Switch swRecibeDe = findViewById(R.id.switch_recibir_de);
+		TextView nombre = findViewById(R.id.nombre);
+		TextView provincia = findViewById(R.id.provincia);
+		TextView localidad = findViewById(R.id.localidad);
+		TextView edad = findViewById(R.id.edad);
+		Spinner sangre = findViewById(R.id.sangre);
+		
+		if (swNombre.isChecked()) {
+			busqueda = new BusquedaNombre(nombre.getText().toString(), busqueda);
+		}
+		if (swProvincia.isChecked()) {
+			busqueda = new BusquedaProvincia(provincia.getText().toString(), busqueda);
+		}
+		if (swLocalidad.isChecked()) {
+			busqueda = new BusquedaLocalidad(localidad.getText().toString(), busqueda);
+		}
+		if (swMayorA.isChecked()) {
+			busqueda = new BusquedaEdadMayorA(Integer.getInteger(edad.getText().toString()), busqueda);
+		}
+		if (swMenorA.isChecked()) {
+			busqueda = new BusquedaEdadMenorA(Integer.getInteger(edad.getText().toString()), busqueda);
+		}
+		if (swDonaA.isChecked()) {
+			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());
+			Sangre s = sf.crearSangre();
+			busqueda = new BusquedaPuedeDonarA(s, busqueda);
+		}
+		if (swRecibeDe.isChecked()) {
+			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());
+			Sangre s = sf.crearSangre();
+			busqueda = new BusquedaPuedeRecibirDe(s, busqueda);
+		}
 	
+		Intent intent = new Intent(this, ListarDonantesActivity.class);
+		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
+		intent.putExtra("busqueda", busqueda);
+		startActivity(intent);
 	}
 }

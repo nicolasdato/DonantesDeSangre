@@ -13,6 +13,6 @@ public class BusquedaLocalidad extends BusquedaCondicion {
 
 	@Override
 	protected Boolean condicion(Persona persona) {
-		return persona.getLocalidad().equals(localidad);
+		return persona.getLocalidad().contains(localidad);
 	}
 }

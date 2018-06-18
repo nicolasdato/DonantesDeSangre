@@ -24,7 +24,6 @@ import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 public class AgregarDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener, DialogInterface.OnClickListener {
 	
 	private Boolean agregarYo = false;
-	private DonantesDeSangre donantesDeSangre;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +49,7 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
 		
-		donantesDeSangre = (DonantesDeSangre)getIntent().getSerializableExtra("donantesDeSangre");
-		super.setDonantesDeSangre(donantesDeSangre);
-		
-		if (donantesDeSangre.getYo() == null) {
+		if (getDonantesDeSangre().getYo() == null) {
 			agregarYo = true;
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 			dialog.setMessage(R.string.crear_yo);
@@ -108,14 +104,14 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			Calendar calendario = new GregorianCalendar((Integer)anio.getSelectedItem(), mes.getSelectedItemPosition(), dia.getSelectedItemPosition() + 1);
 			Persona persona = new Persona(nombre.getText().toString(), localidad.getText().toString(), provincia.getText().toString(), direccion.getText().toString(),
 					telefono.getText().toString(), email.getText().toString(), false, calendario, sangreFactory.crearSangre());
-			if (donantesDeSangre.getDonantes().contains(persona)) {
+			if (getDonantesDeSangre().getDonantes().contains(persona)) {
 				Snackbar mensaje = Snackbar.make(view, R.string.persona_existente, Snackbar.LENGTH_LONG);
 				mensaje.show();
 			}
 			else {
-				donantesDeSangre.agregarDonante(persona);
+				getDonantesDeSangre().agregarDonante(persona);
 				if (agregarYo) {
-					donantesDeSangre.setYo(persona);
+					getDonantesDeSangre().setYo(persona);
 				}
 				Intent intent = new Intent();
 				intent.putExtra("texto", R.string.agregado_correcto);

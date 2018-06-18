@@ -11,37 +11,25 @@ import ar.ndato.donantesdesangre.datos.Datos;
 import ar.ndato.donantesdesangre.datos.DatosException;
 import ar.ndato.donantesdesangre.datos.DatosJson;
 
-public abstract class ActividadPersistente extends AppCompatActivity {
+public abstract class ActividadPersistente extends ActividadBase {
 	
-	private DonantesDeSangre donantesDeSangre;
-	
-	public void setDonantesDeSangre(DonantesDeSangre donantesDeSangre) {
-		this.donantesDeSangre = donantesDeSangre;
-	}
 	
 	@Override
 	public void onStop() {
 		super.onStop();
-		guardar(donantesDeSangre);
+		guardar(getDonantesDeSangre());
 	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle bundle) {
 		super.onSaveInstanceState(bundle);
-		guardar(donantesDeSangre);
+		guardar(getDonantesDeSangre());
 	}
 	
 	@Override
 	public void onRestoreInstanceState(Bundle bundle) {
 		super.onRestoreInstanceState(bundle);
-		cargar(donantesDeSangre);
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.menu, menu);
-		return true;
+		cargar(getDonantesDeSangre());
 	}
 	
 	public void cargar(DonantesDeSangre donantesDeSangre) {

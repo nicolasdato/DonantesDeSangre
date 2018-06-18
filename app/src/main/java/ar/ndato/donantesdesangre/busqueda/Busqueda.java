@@ -1,5 +1,7 @@
 package ar.ndato.donantesdesangre.busqueda;
 
+import java.io.Serializable;
+
 import ar.ndato.donantesdesangre.Persona;
 
 /**
@@ -9,7 +11,7 @@ import ar.ndato.donantesdesangre.Persona;
  * @see BusquedaCondicion
  * @see BusquedaBase
  */
-public abstract class Busqueda {
+public abstract class Busqueda implements Serializable {
 	protected abstract Boolean condicionRecursiva(Persona persona);
 
 	/**

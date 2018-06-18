@@ -23,9 +23,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-        <activity android:name=".BuscarDonanteActivity"
-            android:parentActivityName=".MainActivity" >
+        <activity
+            android:name=".BuscarDonanteActivity"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -45,6 +45,13 @@
         </activity>
         -->
 
+        <activity
+            android:name="ar.ndato.donantesdesangre.vista.ListarDonantesActivity"
+            android:parentActivityName=".BuscarDonanteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".BuscarDonanteActivity" />
+        </activity>
     </application>
 
 </manifest>

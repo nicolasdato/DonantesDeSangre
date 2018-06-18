@@ -9,38 +9,34 @@ import ar.ndato.donantesdesangre.DonantesDeSangre;
 
 public class MainActivity extends ActividadPersistente {
 	
-	private DonantesDeSangre donantesDeSangre;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		donantesDeSangre = DonantesDeSangre.getInstance();
-		super.setDonantesDeSangre(donantesDeSangre);
-		cargar(donantesDeSangre);
+		cargar(getDonantesDeSangre());
 	}
 	
 	public void agregarDonante(View view) {
 		Intent intent = new Intent(this, AgregarDonanteActivity.class);
-		intent.putExtra("donantesDeSangre", donantesDeSangre);
+		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivityForResult(intent, 0);
 	}
 	
 	public void buscarDonante(View view) {
 		Intent intent = new Intent(this, BuscarDonanteActivity.class);
-		intent.putExtra("donantesDeSangre", donantesDeSangre);
+		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivity(intent);
 	}
 	
 	public void agregarDonacion(View view) {
 		/*Intent intent = new Intent(this, AgregarDonacionActivity.class);
-		intent.putExtra("donantesDeSangre", donantesDeSangre);
+		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivity(intent);*/
 	}
 	
 	public void estadisticas(View view) {
 		/*Intent intent = new Intent(this, EstadisticasActivity.class);
-		intent.putExtra("donantesDeSangre", donantesDeSangre);
+		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivity(intent);*/
 	}
 	
