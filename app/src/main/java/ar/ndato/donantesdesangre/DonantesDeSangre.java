@@ -221,6 +221,7 @@ public class DonantesDeSangre implements Serializable {
             datos.leer();
             donantes = new HashMap<Persona, Set<Donacion>>();
 	        for(Persona persona : datos.getDonantes()) {
+	        	agregarDonante(persona);
 		        agregarDonaciones(persona, datos.getDonaciones(persona));
 	        }
 	        Persona yo = datos.getYo();
@@ -255,6 +256,7 @@ public class DonantesDeSangre implements Serializable {
         if(datos != null) {
             datos.leer();
 	        for(Persona persona : datos.getDonantes()) {
+	        	agregarDonante(persona);
 	        	agregarDonaciones(persona, datos.getDonaciones(persona));
 	        }
 			Persona yo = datos.getYo();
