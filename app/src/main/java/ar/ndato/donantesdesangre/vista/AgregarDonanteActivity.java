@@ -10,13 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import ar.ndato.donantesdesangre.DonantesDeSangre;
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.factory.AbstractSangreFactory;
 import ar.ndato.donantesdesangre.factory.SangreStringFactory;
@@ -100,10 +100,11 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			Spinner anio = findViewById(R.id.anio);
 			Spinner dia = findViewById(R.id.anio);
 			Spinner sangre = findViewById(R.id.sangre);
+			Switch sw = findViewById(R.id.switch_es_favorito);
 			AbstractSangreFactory sangreFactory = new SangreStringFactory((String)sangre.getSelectedItem());
 			Calendar calendario = new GregorianCalendar((Integer)anio.getSelectedItem(), mes.getSelectedItemPosition(), dia.getSelectedItemPosition() + 1);
 			Persona persona = new Persona(nombre.getText().toString(), localidad.getText().toString(), provincia.getText().toString(), direccion.getText().toString(),
-					telefono.getText().toString(), email.getText().toString(), false, calendario, sangreFactory.crearSangre());
+					telefono.getText().toString(), email.getText().toString(), sw.isChecked(), calendario, sangreFactory.crearSangre());
 			if (getDonantesDeSangre().getDonantes().contains(persona)) {
 				Snackbar mensaje = Snackbar.make(view, R.string.persona_existente, Snackbar.LENGTH_LONG);
 				mensaje.show();

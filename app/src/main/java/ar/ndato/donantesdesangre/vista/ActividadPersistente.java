@@ -11,8 +11,17 @@ import ar.ndato.donantesdesangre.datos.Datos;
 import ar.ndato.donantesdesangre.datos.DatosException;
 import ar.ndato.donantesdesangre.datos.DatosJson;
 
-public abstract class ActividadPersistente extends ActividadBase {
+public abstract class ActividadPersistente extends AppCompatActivity {
+	private DonantesDeSangre donantesDeSangre;
 	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		donantesDeSangre = DonantesDeSangre.getInstance();
+		if (donantesDeSangre.getYo() == null) {
+			cargar(donantesDeSangre);
+		}
+	}
 	
 	@Override
 	public void onStop() {
@@ -52,5 +61,16 @@ public abstract class ActividadPersistente extends ActividadBase {
 		} catch (DatosException ex) {
 		
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+	
+	public DonantesDeSangre getDonantesDeSangre() {
+		return donantesDeSangre;
 	}
 }

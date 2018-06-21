@@ -11,6 +11,7 @@ import ar.ndato.donantesdesangre.busqueda.Busqueda;
 import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
 import ar.ndato.donantesdesangre.busqueda.BusquedaEdadMayorA;
 import ar.ndato.donantesdesangre.busqueda.BusquedaEdadMenorA;
+import ar.ndato.donantesdesangre.busqueda.BusquedaEsFavorito;
 import ar.ndato.donantesdesangre.busqueda.BusquedaLocalidad;
 import ar.ndato.donantesdesangre.busqueda.BusquedaNombre;
 import ar.ndato.donantesdesangre.busqueda.BusquedaProvincia;
@@ -20,7 +21,7 @@ import ar.ndato.donantesdesangre.factory.AbstractSangreFactory;
 import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 import ar.ndato.donantesdesangre.sangre.Sangre;
 
-public class BuscarDonanteActivity extends ActividadBase {
+public class BuscarDonanteActivity extends ActividadPersistente {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class BuscarDonanteActivity extends ActividadBase {
 			case R.id.switch_recibir_de: {
 				Switch sw1 = findViewById(R.id.switch_donar_a);
 				Switch sw2 = findViewById(R.id.switch_recibir_de);
-				findViewById(R.id.sangre).setEnabled(sw1.isChecked() || sw2.isChecked());
+				findViewById(R.id.nombre).setEnabled(sw1.isChecked() || sw2.isChecked());
 				break;
 			}
 			case R.id.switch_edad_mayor:
@@ -67,6 +68,7 @@ public class BuscarDonanteActivity extends ActividadBase {
 		Switch swMenorA = findViewById(R.id.switch_edad_menor);
 		Switch swDonaA = findViewById(R.id.switch_donar_a);
 		Switch swRecibeDe = findViewById(R.id.switch_recibir_de);
+		Switch swEsFavorito = findViewById(R.id.switch_es_favorito);
 		TextView nombre = findViewById(R.id.nombre);
 		TextView provincia = findViewById(R.id.provincia);
 		TextView localidad = findViewById(R.id.localidad);
@@ -98,9 +100,11 @@ public class BuscarDonanteActivity extends ActividadBase {
 			Sangre s = sf.crearSangre();
 			busqueda = new BusquedaPuedeRecibirDe(s, busqueda);
 		}
+		if (swEsFavorito.isChecked()) {
+			busqueda = new BusquedaEsFavorito(busqueda);
+		}
 	
 		Intent intent = new Intent(this, ListarDonantesActivity.class);
-		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		intent.putExtra("busqueda", busqueda);
 		startActivity(intent);
 	}

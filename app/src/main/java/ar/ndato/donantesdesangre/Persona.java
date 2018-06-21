@@ -1,5 +1,7 @@
 package ar.ndato.donantesdesangre;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -8,7 +10,7 @@ import ar.ndato.donantesdesangre.sangre.Sangre;
 /**
  * Clase para modelar los donantes
  */
-public class Persona implements Serializable {
+public class Persona implements Serializable, Comparable<Persona> {
 	private String nombre;
 	private String localidad;
 	private String provincia;
@@ -148,5 +150,21 @@ public class Persona implements Serializable {
 
 	public void setSangre(Sangre sangre) {
 		this.sangre = sangre;
+	}
+	
+	/**
+	 * Compara la {@link Persona} para ordenarla. La persona que sea favorita va primera contra una persona que no sea favorita. Si ambas son favoritas o no favoritas por igual, entonces el orden es el de los nombres
+	 * @param o la {@link Persona contra la cual comparar}
+	 * @return -1 si o es mayor a this, 1 si this es mayor a o, 0 si son iguales
+	 */
+	@Override
+	public int compareTo(@NonNull Persona o) {
+		if (this.isFavorito() && !o.isFavorito()) {
+			return -1;
+		}
+		if (!this.isFavorito() && o.isFavorito()) {
+			return 1;
+		}
+		return this.getNombre().compareToIgnoreCase(o.getNombre());
 	}
 }

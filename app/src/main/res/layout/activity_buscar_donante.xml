@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -64,10 +64,10 @@
                 android:id="@+id/sangre"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
+                android:layout_marginStart="8dp"
                 android:enabled="false"
                 android:entries="@array/sangres"
                 app:layout_constraintBottom_toBottomOf="@+id/switch_recibir_de"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/switch_donar_a" />
 
@@ -159,9 +159,8 @@
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/puede_recibir_de"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/switch_es_favorito"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switch_donar_a" />
 
             <android.support.constraint.Guideline
@@ -172,6 +171,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.35"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <Switch
+                android:id="@+id/switch_es_favorito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/es_favorito"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/switch_recibir_de" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

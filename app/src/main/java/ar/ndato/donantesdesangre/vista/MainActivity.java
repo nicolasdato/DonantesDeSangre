@@ -18,13 +18,11 @@ public class MainActivity extends ActividadPersistente {
 	
 	public void agregarDonante(View view) {
 		Intent intent = new Intent(this, AgregarDonanteActivity.class);
-		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivityForResult(intent, 0);
 	}
 	
 	public void buscarDonante(View view) {
 		Intent intent = new Intent(this, BuscarDonanteActivity.class);
-		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
 		startActivity(intent);
 	}
 	
