@@ -18,7 +18,7 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		donantesDeSangre = DonantesDeSangre.getInstance();
-		if (donantesDeSangre.getYo() == null) {
+		if (donantesDeSangre.getDonantes().size() == 0) { //no hay datos, quisas hay datos guardados
 			cargar(donantesDeSangre);
 		}
 	}
@@ -48,7 +48,7 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 				Datos datos = new DatosJson(archivo);
 				donantesDeSangre.importar(datos);
 			} catch (DatosException ex) {
-			
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -59,7 +59,7 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 			Datos datos = new DatosJson(archivo);
 			donantesDeSangre.exportar(datos);
 		} catch (DatosException ex) {
-		
+			ex.printStackTrace();
 		}
 	}
 	

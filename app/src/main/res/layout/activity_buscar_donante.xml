@@ -191,8 +191,6 @@
         android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:onClick="buscarDonante"
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -17,10 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AgregarDonanteActivity" >
+            android:name=".AgregarDonanteActivity"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".BuscarDonanteActivity" >
+            android:name=".BuscarDonanteActivity"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
 
         <!--

@@ -3,6 +3,7 @@ package ar.ndato.donantesdesangre.vista;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +32,7 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		setContentView(R.layout.activity_agegar_donante);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		findViewById(R.id.boton_agregar_persona).requestFocus();
+		
 		Spinner anio = findViewById(R.id.anio);
 		List<Integer> anios = new ArrayList<>();
 		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
@@ -48,6 +49,7 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 		
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
+
 		
 		if (getDonantesDeSangre().getYo() == null) {
 			agregarYo = true;
@@ -57,6 +59,8 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			dialog.setCancelable(false);
 			dialog.setPositiveButton(R.string.ok, this);
 			dialog.create().show();
+			Switch favorito = findViewById(R.id.switch_es_favorito);
+			favorito.setChecked(true);
 		}
 	}
 	
@@ -112,6 +116,7 @@ public class AgregarDonanteActivity extends ActividadPersistente implements Adap
 			else {
 				getDonantesDeSangre().agregarDonante(persona);
 				if (agregarYo) {
+					persona.setFavorito(true);
 					getDonantesDeSangre().setYo(persona);
 				}
 				Intent intent = new Intent();

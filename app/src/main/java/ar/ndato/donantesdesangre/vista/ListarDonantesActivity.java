@@ -2,6 +2,7 @@ package ar.ndato.donantesdesangre.vista;
 
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,8 +28,9 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		setContentView(R.layout.activity_listar_donantes);
 		busqueda = (Busqueda)getIntent().getSerializableExtra("busqueda");
 		RecyclerView rw = findViewById(R.id.recycler);
-		rw.setHasFixedSize(true);
+		rw.setHasFixedSize(false);
 		rw.setLayoutManager(new LinearLayoutManager(this));
+		rw.addItemDecoration(new DividerItemDecoration(rw.getContext(), DividerItemDecoration.VERTICAL));
 		rw.setAdapter(new ListarDonantesActivity.ListarAdapter(busqueda));
 	}
 	
@@ -54,7 +56,7 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		}
 		@Override
 		public ListarAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			ConstraintLayout layout = (ConstraintLayout)LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_donante, null);
+			ConstraintLayout layout = (ConstraintLayout)LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_donante, parent, false);
 			return new ListarAdapter.ViewHolder(layout);
 		}
 		
@@ -85,7 +87,9 @@ public class ListarDonantesActivity extends ActividadPersistente {
 					nombre.setText(persona.getNombre());
 					sangre.setText(persona.getSangre().toString());
 					donaciones.setText(String.valueOf(getDonantesDeSangre().getDonaciones(persona).size()));
-					if (persona.isFavorito()) {
+					if (persona.equals(getDonantesDeSangre().getYo())) {
+						favorito.setImageResource(R.drawable.ic_person);
+					} else if (persona.isFavorito()) {
 						favorito.setImageResource(R.drawable.ic_star);
 					} else {
 						favorito.setImageResource(R.drawable.ic_star_border);
