@@ -34,6 +34,14 @@
     <string name="si">Si</string>
     <string name="no">No</string>
     <string name="es_favorito">Es favorito</string>
+    <string name="error_crear_donante">Error al crear a la persona</string>
+    <string name="persona_guardada">Persona guardada</string>
+    <string name="pergunta_eliminar_donante">Seguro que desea eliminar al donante?</string>
+    <string name="pergunta_eliminar_donante_title">Seguro?</string>
+    <string name="pergunta_que_buscar_title">Que buscar?</string>
+    <string name="pergunta_que_buscar">Buscar para que esta persona:</string>
+    <string name="done">Done</string>
+    <string name="reciba">Reciba</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarDonanteActivity">
+    tools:context=".ABMDonanteActivity">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -180,8 +180,57 @@
         android:layout_marginEnd="24dp"
         android:onClick="agregarDonante"
         android:src="@drawable/ic_person_add"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/boton_buscar_donante"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="buscarDonante"
+        android:src="@drawable/ic_person_buscar"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/boton_modify_persona"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="modificarDonante"
+        android:src="@drawable/ic_person_edit"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donante" />
+
+    <ImageView
+        android:id="@+id/boton_guardar_persona"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="guardarDonante"
+        android:src="@drawable/ic_person_save"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donante" />
+
+    <ImageView
+        android:id="@+id/boton_eliminar_persona"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="eliminarDonante"
+        android:src="@drawable/ic_person_remove"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_guardar_persona" />
 
 
 </android.support.constraint.ConstraintLayout>

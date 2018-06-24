@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/nico/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_star_border_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/nico/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_delete_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,8 +34,11 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="dc4640" />
-                            <entry key="outputName" value="ic_star_border" />
+                            <entry key="height" value="48" />
+                            <entry key="outputName" value="ic_person_remove" />
+                            <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/icon.svg" />
+                            <entry key="width" value="48" />
                           </map>
                         </option>
                       </PersistentState>

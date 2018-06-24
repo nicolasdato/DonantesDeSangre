@@ -7,6 +7,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
 import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
 import ar.ndato.donantesdesangre.busqueda.BusquedaEdadMayorA;
@@ -106,6 +107,20 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 	
 		Intent intent = new Intent(this, ListarDonantesActivity.class);
 		intent.putExtra("busqueda", busqueda);
-		startActivity(intent);
+		startActivityForResult(intent, 0);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (data != null && resultCode == RESULT_OK) {
+			Persona donante = (Persona)data.getSerializableExtra("donante");
+			if (donante != null) {
+				Intent intent = new Intent(this, ABMDonanteActivity.class);
+				intent.putExtra("donante", donante);
+				intent.putExtra("tipo", ABMDonanteActivity.Tipo.MODIFICACION.ordinal());
+				startActivityForResult(intent, 0);
+			}
+		}
 	}
 }

@@ -1,7 +1,9 @@
 package ar.ndato.donantesdesangre.vista;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +30,7 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		setContentView(R.layout.activity_listar_donantes);
 		busqueda = (Busqueda)getIntent().getSerializableExtra("busqueda");
 		RecyclerView rw = findViewById(R.id.recycler);
-		rw.setHasFixedSize(false);
+		rw.setHasFixedSize(true);
 		rw.setLayoutManager(new LinearLayoutManager(this));
 		rw.addItemDecoration(new DividerItemDecoration(rw.getContext(), DividerItemDecoration.VERTICAL));
 		rw.setAdapter(new ListarDonantesActivity.ListarAdapter(busqueda));
@@ -46,7 +48,19 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		busqueda = (Busqueda)bundle.getSerializable("busqueda");
 	}
 	
-	protected class ListarAdapter extends RecyclerView.Adapter<ListarAdapter.ViewHolder> {
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK && data != null) {
+			int resultado;
+			resultado = data.getExtras().getInt("texto");
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);
+			mensaje.show();
+		}
+		RecyclerView rw = findViewById(R.id.recycler);
+		rw.setAdapter(new ListarDonantesActivity.ListarAdapter(busqueda));
+	}
+	
+	protected class ListarAdapter extends RecyclerView.Adapter<ListarAdapter.ViewHolder> implements View.OnClickListener {
 		List<Persona> donantes;
 		
 		public ListarAdapter(Busqueda busqueda) {
@@ -57,6 +71,7 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		@Override
 		public ListarAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 			ConstraintLayout layout = (ConstraintLayout)LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_donante, parent, false);
+			layout.setOnClickListener(this);
 			return new ListarAdapter.ViewHolder(layout);
 		}
 		
@@ -68,6 +83,16 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		@Override
 		public int getItemCount() {
 			return donantes == null ? 0 : donantes.size();
+		}
+		
+		@Override
+		public void onClick(View view) {
+			RecyclerView rw = findViewById(R.id.recycler);
+			int idx = rw.getChildLayoutPosition(view);
+			Intent intent = new Intent();
+			intent.putExtra("donante", donantes.get(idx));
+			setResult(RESULT_OK, intent);
+			finish();
 		}
 		
 		public class ViewHolder extends RecyclerView.ViewHolder {

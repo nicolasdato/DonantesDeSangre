@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import ar.ndato.donantesdesangre.DonantesDeSangre;
-
 public class MainActivity extends ActividadPersistente {
 	
 	@Override
@@ -17,7 +15,8 @@ public class MainActivity extends ActividadPersistente {
 	}
 	
 	public void agregarDonante(View view) {
-		Intent intent = new Intent(this, AgregarDonanteActivity.class);
+		Intent intent = new Intent(this, ABMDonanteActivity.class);
+		intent.putExtra("tipo", ABMDonanteActivity.Tipo.ALTA.ordinal());
 		startActivityForResult(intent, 0);
 	}
 	

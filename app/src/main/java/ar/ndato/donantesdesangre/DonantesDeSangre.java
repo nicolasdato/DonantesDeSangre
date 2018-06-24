@@ -54,7 +54,7 @@ public class DonantesDeSangre implements Serializable {
     }
 
     /**
-     * Quita un donante agregado con {@link DonantesDeSangre#agregarDonante}
+     * Quita un donante agregado con {@link DonantesDeSangre#agregarDonante}, excepto que el donante sea {@link DonantesDeSangre#getYo}
      * @param persona el donante a quitar
      * @see DonantesDeSangre#agregarDonante
      * @see DonantesDeSangre#getYo()
@@ -62,10 +62,9 @@ public class DonantesDeSangre implements Serializable {
      *
      */
     public void quitarDonante(Persona persona) {
-        donantes.remove(persona);
-        if(persona == yo) {
-            yo = null;
-        }
+    	if (!persona.equals(yo)) {
+		    donantes.remove(persona);
+	    }
     }
 
     /**
