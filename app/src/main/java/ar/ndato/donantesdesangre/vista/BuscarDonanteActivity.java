@@ -23,6 +23,8 @@ import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 import ar.ndato.donantesdesangre.sangre.Sangre;
 
 public class BuscarDonanteActivity extends ActividadPersistente {
+	private final int CODE_BUSQUEDA = 0;
+	private final int CODE_ABM = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,19 +109,24 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 	
 		Intent intent = new Intent(this, ListarDonantesActivity.class);
 		intent.putExtra("busqueda", busqueda);
-		startActivityForResult(intent, 0);
+		startActivityForResult(intent, CODE_BUSQUEDA);
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		if (data != null && resultCode == RESULT_OK) {
-			Persona donante = (Persona)data.getSerializableExtra("donante");
-			if (donante != null) {
-				Intent intent = new Intent(this, ABMDonanteActivity.class);
-				intent.putExtra("donante", donante);
-				intent.putExtra("tipo", ABMDonanteActivity.Tipo.MODIFICACION.ordinal());
-				startActivityForResult(intent, 0);
+		if (resultCode == RESULT_OK) {
+			if (data != null && requestCode == CODE_BUSQUEDA) {
+				Persona donante = (Persona) data.getSerializableExtra("donante");
+				if (donante != null) {
+					Intent intent = new Intent(this, ABMDonanteActivity.class);
+					intent.putExtra("donante", donante);
+					intent.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
+					startActivityForResult(intent, CODE_ABM);
+				}
+			}
+			if (requestCode == CODE_ABM) {
+				buscarDonante(findViewById(R.id.boton_buscar_persona));
 			}
 		}
 	}

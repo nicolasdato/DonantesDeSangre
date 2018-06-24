@@ -54,7 +54,7 @@ public class DonantesDeSangre implements Serializable {
     }
 
     /**
-     * Quita un donante agregado con {@link DonantesDeSangre#agregarDonante}, excepto que el donante sea {@link DonantesDeSangre#getYo}
+     * Quita un donante agregado con {@link DonantesDeSangre#agregarDonante} excepto que el donante sea {@link DonantesDeSangre#getYo}, en ese caso primero reasignar con {@link DonantesDeSangre#setYo} primero
      * @param persona el donante a quitar
      * @see DonantesDeSangre#agregarDonante
      * @see DonantesDeSangre#getYo()
@@ -65,6 +65,31 @@ public class DonantesDeSangre implements Serializable {
     	if (!persona.equals(yo)) {
 		    donantes.remove(persona);
 	    }
+    }
+	
+	/**
+	 * Modifica un donante agregado con {@link DonantesDeSangre#agregarDonante} y tambien actualiza las donaciones que el receptor sea esa persona a modificar
+	 * @param original la persona original perteneciente a {@link DonantesDeSangre#getDonantes}
+	 * @param nueva los datos actualizados de la persona
+	 */
+	public void modificarDonante(Persona original, Persona nueva) {
+		if (original != null && nueva!= null) {
+			if (donantes.containsKey(original)) {
+				Set<Donacion> donaciones = donantes.get(original);
+				donantes.remove(original);
+				donantes.put(nueva, donaciones);
+				for (Set<Donacion> sd : donantes.values()) {
+					for (Donacion d : sd) {
+						if (original.equals(d.getReceptor())) {
+							d.setReceptor(nueva);
+						}
+					}
+				}
+			}
+			if (original.equals(yo)) {
+				yo = nueva;
+			}
+		}
     }
 
     /**

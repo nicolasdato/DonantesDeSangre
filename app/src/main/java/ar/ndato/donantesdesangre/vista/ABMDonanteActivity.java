@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
+import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
 import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
@@ -27,19 +29,21 @@ import ar.ndato.donantesdesangre.factory.SangreStringFactory;
 
 public class ABMDonanteActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener, DialogInterface.OnClickListener {
 	
+	public static final int ALTA = 0;
+	public static final int MODIFICACION = 1;
+	public static final int ALTA_YO = 2;
+	
+	private final int CODE_BUSQUEDA = 0;
+	
 	private Boolean agregarYo = false;
-	public enum Tipo {
-		ALTA,
-		MODIFICACION
-	}
-	private Tipo tipo;
+	private int tipo;
 	private Persona donante;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_abm_donante);
-		tipo = Tipo.values()[getIntent().getExtras().getInt("tipo", Tipo.ALTA.ordinal())];
+		tipo =getIntent().getExtras().getInt("tipo", ALTA);
 		
 		Spinner anio = findViewById(R.id.anio);
 		List<Integer> anios = new ArrayList<>();
@@ -58,19 +62,22 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
 		
-		if (getDonantesDeSangre().getYo() == null) {
+		if (getDonantesDeSangre().getYo() == null || tipo == ALTA_YO) {
 			agregarYo = true;
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setMessage(R.string.crear_yo);
-			dialog.setTitle(R.string.crear_yo_title);
-			dialog.setCancelable(false);
-			dialog.setPositiveButton(R.string.ok, this);
-			dialog.create().show();
+			if (tipo != ALTA_YO) {
+				AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+				dialog.setMessage(R.string.crear_yo);
+				dialog.setTitle(R.string.crear_yo_title);
+				dialog.setCancelable(false);
+				dialog.setPositiveButton(R.string.ok, this);
+				dialog.create().show();
+			}
 			Switch favorito = findViewById(R.id.switch_es_favorito);
 			favorito.setChecked(true);
 		}
 		
 		switch (tipo) {
+			case ALTA_YO:
 			case ALTA:
 				enAlta();
 				break;
@@ -82,10 +89,20 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		}
 	}
 	
+	public void switchFavorito(View view) {
+		Switch sw = (Switch)view;
+		if (!sw.isChecked() && (agregarYo || (tipo == MODIFICACION && donante != null && donante.equals(getDonantesDeSangre().getYo())))) {
+			sw.setChecked(true);
+			Snackbar mensaje = Snackbar.make(view, R.string.editando_yo, Snackbar.LENGTH_SHORT);
+			mensaje.show();
+		}
+	}
+	
 	private void setDatos(Persona donante) {
 		if (donante == null) {
 			return;
 		}
+		this.donante = donante;
 		
 		EditText nombre = findViewById(R.id.nombre);
 		EditText localidad = findViewById(R.id.localidad);
@@ -152,12 +169,8 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		findViewById(R.id.boton_agregar_persona).setVisibility(View.INVISIBLE);
 		findViewById(R.id.boton_guardar_persona).setVisibility(View.VISIBLE);
 		findViewById(R.id.boton_modify_persona).setVisibility(View.INVISIBLE);
-		if (donante.equals(getDonantesDeSangre().getYo())) {
-			findViewById(R.id.boton_eliminar_persona).setVisibility(View.INVISIBLE);
-		} else {
-			findViewById(R.id.boton_eliminar_persona).setVisibility(View.VISIBLE);
-		}
-		findViewById(R.id.boton_buscar_donante).setVisibility(View.VISIBLE);
+		findViewById(R.id.boton_eliminar_persona).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_buscar_donante).setVisibility(View.INVISIBLE);
 	}
 	
 	private void cambiarEditable(boolean estado) {
@@ -191,7 +204,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		super.onSaveInstanceState(bundle);
 		bundle.putBoolean("agregarYo", agregarYo);
 		bundle.putSerializable("donante", donante);
-		bundle.putInt("tipo", tipo.ordinal());
+		bundle.putInt("tipo", tipo);
 	}
 	
 	@Override
@@ -199,7 +212,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		super.onRestoreInstanceState(bundle);
 		agregarYo = bundle.getBoolean("agregarYo");
 		donante = (Persona)bundle.getSerializable("donante");
-		tipo = Tipo.values()[bundle.getInt("tipo")];
+		tipo = bundle.getInt("tipo", ALTA);
 	}
 	
 	public void agregarDonante(View view) {
@@ -233,11 +246,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 			Snackbar mensaje = Snackbar.make(view, R.string.error_crear_donante, Snackbar.LENGTH_LONG);
 			mensaje.show();
 		} else {
-			getDonantesDeSangre().agregarDonante(persona);
-			if (getDonantesDeSangre().getYo().equals(donante)) {
-				getDonantesDeSangre().setYo(persona);
-			}
-			getDonantesDeSangre().quitarDonante(donante);
+			getDonantesDeSangre().modificarDonante(donante, persona);
 			donante = persona;
 			Snackbar mensaje = Snackbar.make(view, R.string.persona_guardada, Snackbar.LENGTH_LONG);
 			mensaje.show();
@@ -252,6 +261,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 				switch (which){
 					case DialogInterface.BUTTON_POSITIVE:
 						getDonantesDeSangre().quitarDonante(donante);
+						setResult(RESULT_OK);
 						finish();
 						break;
 		
@@ -273,22 +283,23 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		DialogInterface.OnClickListener listenerBuscar = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				Busqueda busqueda = null;
+				Intent intent;
 				switch (which){
 					case DialogInterface.BUTTON_POSITIVE: {
-						Intent intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
-						Busqueda busqueda = new BusquedaPuedeRecibirDe(donante.getSangre(), new BusquedaBase());
-						intent.putExtra("busqueda", busqueda);
-						startActivity(intent);
+						busqueda = new BusquedaPuedeRecibirDe(donante.getSangre(), new BusquedaBase());
 						break;
 					}
 					
 					case DialogInterface.BUTTON_NEGATIVE: {
-						Intent intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
-						Busqueda busqueda = new BusquedaPuedeDonarA(donante.getSangre(), new BusquedaBase());
-						intent.putExtra("busqueda", busqueda);
-						startActivity(intent);
+						busqueda = new BusquedaPuedeDonarA(donante.getSangre(), new BusquedaBase());
 						break;
 					}
+				}
+				if (busqueda != null) {
+					intent = new Intent(ABMDonanteActivity.this, ListarDonantesActivity.class);
+					intent.putExtra("busqueda", busqueda);
+					startActivityForResult(intent, CODE_BUSQUEDA);
 				}
 			}
 		};
@@ -352,5 +363,20 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		dialog.dismiss();
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (resultCode == RESULT_OK) {
+			if (data != null && requestCode == CODE_BUSQUEDA) {
+				Persona donante = (Persona) data.getSerializableExtra("donante");
+				if (donante != null) {
+					this.donante = donante;
+					setDatos(donante);
+					enVista();
+				}
+			}
+		}
 	}
 }

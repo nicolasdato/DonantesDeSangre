@@ -42,6 +42,10 @@
     <string name="pergunta_que_buscar">Buscar para que esta persona:</string>
     <string name="done">Done</string>
     <string name="reciba">Reciba</string>
+    <string name="editando_yo">Tus datos siempre son favorito</string>
+    <string name="mis_datos">Mis Datos</string>
+    <string name="listar_todos">Listar todos</string>
+    <string name="ver_donaciones">Ver donaciones</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>

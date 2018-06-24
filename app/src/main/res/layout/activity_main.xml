@@ -2,72 +2,64 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/main_activity">
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:src="@drawable/ic_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonAgegar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="agregarDonante"
         android:text="@string/agegar_donante"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBuscar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
+        app:layout_constraintBottom_toTopOf="@+id/listar_todos"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonBuscar"
         android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:onClick="buscarDonante"
         android:text="@string/buscar_donante"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDonacion"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/listar_todos"
+        app:layout_constraintEnd_toStartOf="@+id/listar_todos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAgegar" />
+        app:layout_constraintTop_toTopOf="@+id/listar_todos" />
 
     <Button
         android:id="@+id/buttonDonacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:onClick="agregarDonacion"
         android:text="@string/agregar_donacion"
         app:layout_constraintBottom_toTopOf="@+id/buttonEstadistica"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBuscar" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toBottomOf="@+id/listar_todos" />
 
     <Button
         android:id="@+id/buttonEstadistica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="64dp"
         android:onClick="estadisticas"
         android:text="@string/estadistica"
         app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDonacion" />
 
@@ -76,11 +68,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="64dp"
         android:text="@string/exportar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button4" />
 
@@ -88,19 +79,18 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="64dp"
         android:text="@string/importar"
         app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonEstadistica" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_person_add"
         app:layout_constraintBottom_toTopOf="@+id/imageView5"
@@ -109,9 +99,9 @@
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_search"
         app:layout_constraintBottom_toTopOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,9 +109,9 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_donacion"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,9 +119,9 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_info_outline"
         app:layout_constraintBottom_toTopOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,9 +129,9 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_file_download"
         app:layout_constraintBottom_toTopOf="@+id/imageView9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,13 +139,55 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_share"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:onClick="misDatos"
+        android:text="@string/mis_datos"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAgegar"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAgegar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonAgegar" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="64dp" />
+
+    <Button
+        android:id="@+id/listar_todos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="listarTodos"
+        android:text="@string/listar_todos"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDonacion"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/buttonBuscar"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAgegar" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:onClick="verDonaciones"
+        android:text="@string/ver_donaciones"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonDonacion"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDonacion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonDonacion" />
 
 </android.support.constraint.ConstraintLayout>
