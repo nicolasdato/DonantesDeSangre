@@ -13,6 +13,7 @@ public class MainActivity extends ActividadPersistente {
 	private final int CODE_LISTAR = 0;
 	private final int CODE_ABM = 1;
 	private final int CODE_REGRESA_ABM = 2;
+	private final int CODE_ALTA = 3;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +25,14 @@ public class MainActivity extends ActividadPersistente {
 	public void agregarDonante(View view) {
 		Intent intent = new Intent(this, ABMDonanteActivity.class);
 		intent.putExtra("tipo", ABMDonanteActivity.ALTA);
-		startActivityForResult(intent, CODE_ABM);
+		startActivityForResult(intent, CODE_ALTA);
 	}
 	
 	public void buscarDonante(View view) {
 		Intent intent = new Intent(this, BuscarDonanteActivity.class);
+		Intent intentParaBusqueda = new Intent(this, ABMDonanteActivity.class);
+		intentParaBusqueda.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
+		intent.putExtra("intent", intentParaBusqueda);
 		startActivity(intent);
 	}
 	
@@ -50,10 +54,16 @@ public class MainActivity extends ActividadPersistente {
 		startActivityForResult(intent, CODE_LISTAR);
 	}
 	
+	public void verDonaciones(View view) {
+		Intent intent = new Intent(this, BuscarDonanteActivity.class);
+		Intent intentParaBusqueda = new Intent(this, VerDonacionesActivity.class);
+		intent.putExtra("intent", intentParaBusqueda);
+		startActivity(intent);
+	}
+	
 	public void agregarDonacion(View view) {
-		/*Intent intent = new Intent(this, AgregarDonacionActivity.class);
-		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
-		startActivity(intent);*/
+		Intent intent = new Intent(this, AgregarDonacionActivity.class);
+		startActivityForResult(intent, CODE_ALTA);
 	}
 	
 	public void estadisticas(View view) {
@@ -77,7 +87,7 @@ public class MainActivity extends ActividadPersistente {
 						intent.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
 						startActivityForResult(intent, CODE_REGRESA_ABM);
 					}
-				} else if (requestCode == CODE_ABM) {
+				} else if (requestCode == CODE_ALTA) {
 					int resultado;
 					resultado = data.getExtras().getInt("texto");
 					Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);

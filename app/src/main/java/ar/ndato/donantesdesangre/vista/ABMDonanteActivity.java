@@ -43,7 +43,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_abm_donante);
-		tipo =getIntent().getExtras().getInt("tipo", ALTA);
+		tipo = getIntent().getExtras().getInt("tipo", ALTA);
 		
 		Spinner anio = findViewById(R.id.anio);
 		List<Integer> anios = new ArrayList<>();
@@ -199,6 +199,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dias);
 		dia.setAdapter(diasAdapter);
 	}
+	
 	@Override
 	public void onSaveInstanceState(Bundle bundle) {
 		super.onSaveInstanceState(bundle);

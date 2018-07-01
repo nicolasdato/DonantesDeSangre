@@ -18,12 +18,10 @@
         </activity>
         <activity
             android:name=".ABMDonanteActivity"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".BuscarDonanteActivity"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
 
         <!--
         <activity android:name=".AgregarDonacionActivity"
@@ -39,9 +37,10 @@
         </activity>
         -->
 
-        <activity
-            android:name="ar.ndato.donantesdesangre.vista.ListarDonantesActivity" >
-        </activity>
+        <activity android:name=".ListarDonantesActivity" />
+        <activity android:name=".VerDonacionesActivity" />
+        <activity android:name=".AgregarDonacionActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

@@ -30,6 +30,9 @@ public class BusquedaDonoHaceMasDeMeses extends BusquedaCondicion {
 				ultimaDonacion = donacion.getFecha();
 			}
 		}
+		if (ultimaDonacion == null) {
+			return true;
+		}
 
 		hoy.add(Calendar.DAY_OF_MONTH, -ultimaDonacion.get(Calendar.DAY_OF_MONTH));
 		hoy.add(Calendar.MONTH, -ultimaDonacion.get(Calendar.MONTH));

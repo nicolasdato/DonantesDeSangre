@@ -46,6 +46,22 @@
     <string name="mis_datos">Mis Datos</string>
     <string name="listar_todos">Listar todos</string>
     <string name="ver_donaciones">Ver donaciones</string>
+    <string name="tiene_sangre">Tiene sangre</string>
+    <string name="solo_favoritos">Solo favoritos</string>
+    <string name="dono_hace_mas">Donó hace más de</string>
+    <string name="ultima_donacion">Última donación</string>
+    <string name="realizo_donaciones">Realizó las siguientes donaciones:</string>
+    <string name="dono_a_las_personas">Donó a las siguientes personas:</string>
+    <string name="fecha">Fecha</string>
+    <string name="donador">Donador</string>
+    <string name="receptor">Receptor</string>
+    <string name="falta_donador_receptor">Falta donador o el receptor</string>
+    <string name="falta_donador">Falta donador</string>
+    <string name="falta_receptor">Falta receptor</string>
+    <string name="sin_receptor_especifico">Sin receptor específico</string>
+    <string name="donacion_agregada">Donación agregada</string>
+    <string name="pergunta_donacion_no_compatible">El donador y el receptor no son compatibles para la donación, continuar de todas formas?</string>
+    <string name="pergunta_donacion_no_compatible_title">Sangre no compatible</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>
@@ -69,5 +85,12 @@
         <item>B+</item>
         <item>AB-</item>
         <item>AB+</item>
+    </string-array>
+    <string-array name="ultima_donacion">
+        <item>Más de 1 mes</item>
+        <item>Más de 2 meses</item>
+        <item>Más de 6 meses</item>
+        <item>Más de 1 año</item>
+        <item>Más de 2 años</item>
     </string-array>
 </resources>

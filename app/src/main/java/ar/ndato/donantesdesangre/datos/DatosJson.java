@@ -144,19 +144,21 @@ public class DatosJson implements Datos {
 	protected JSONObject personaAJson(Persona persona) throws DatosException {
 		JSONObject object = new JSONObject();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		if (persona == null) {
-			return object;
-		}
 		try {
-			object.putOpt("nombre", persona.getNombre());
-			object.putOpt("localidad", persona.getLocalidad());
-			object.putOpt("provincia", persona.getProvincia());
-			object.putOpt("direccion", persona.getDireccion());
-			object.putOpt("telefono", persona.getTelefono());
-			object.putOpt("mail", persona.getMail());
-			object.putOpt("favorito", persona.isFavorito());
-			object.putOpt("nacimiento", dateFormat.format(persona.getNacimiento().getTime()));
-			object.putOpt("sangre", persona.getSangre().toString());
+			if (persona == null) {
+				object.putOpt("esNull", true);
+			} else {
+				object.putOpt("esNull", false);
+				object.putOpt("nombre", persona.getNombre());
+				object.putOpt("localidad", persona.getLocalidad());
+				object.putOpt("provincia", persona.getProvincia());
+				object.putOpt("direccion", persona.getDireccion());
+				object.putOpt("telefono", persona.getTelefono());
+				object.putOpt("mail", persona.getMail());
+				object.putOpt("favorito", persona.isFavorito());
+				object.putOpt("nacimiento", dateFormat.format(persona.getNacimiento().getTime()));
+				object.putOpt("sangre", persona.getSangre().toString());
+			}
 		} catch (JSONException ex) {
 			throw new DatosException(ex.getMessage());
 		}
@@ -225,6 +227,9 @@ public class DatosJson implements Datos {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
+			if (object.getBoolean("esNull")) {
+				return null;
+			}
 			nombre = object.getString("nombre");
 			localidad = object.getString("localidad");
 			provincia = object.getString("provincia");

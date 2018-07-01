@@ -1,12 +1,14 @@
 package ar.ndato.donantesdesangre;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Donaciones que se usan en {@link DonantesDeSangre}
  */
-public class Donacion implements Serializable {
+public class Donacion implements Serializable, Comparable<Donacion> {
     private Persona receptor;
 	private Calendar fecha;
 
@@ -66,5 +68,19 @@ public class Donacion implements Serializable {
 	 */
 	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
+	}
+	
+	/**
+	 * Compara 2 {@link Donacion} segun su fecha, si es igual la fecha compara los receptores receptor ({@link Persona})
+	 */
+	@Override
+	public int compareTo(@NonNull Donacion o) {
+		if (this.getFecha().after(o.getFecha())) {
+			return -1;
+		}
+		if (this.getFecha().before(o.getFecha())) {
+			return 1;
+		}
+		return this.getReceptor().compareTo(o.getReceptor());
 	}
 }
