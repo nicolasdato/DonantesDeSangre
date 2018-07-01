@@ -53,7 +53,7 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		if (resultCode == RESULT_OK && data != null) {
 			int resultado;
 			resultado = data.getExtras().getInt("texto");
-			Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.listar_donantes_activity), resultado, Snackbar.LENGTH_SHORT);
 			mensaje.show();
 		}
 		RecyclerView rw = findViewById(R.id.recycler);

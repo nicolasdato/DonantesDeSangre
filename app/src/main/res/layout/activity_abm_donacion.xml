@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarDonacionActivity"
+    android:id="@+id/abm_donacion_activity"
+    tools:context=".ABMDonacionActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <Spinner
@@ -70,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/boton_buscar_donador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -99,12 +100,12 @@
         android:layout_marginTop="8dp"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView10"
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_receptor"
         app:layout_constraintStart_toStartOf="@+id/donador"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/boton_buscar_receptor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -115,7 +116,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <ImageView
-        android:id="@+id/imageView11"
+        android:id="@+id/boton_agregar_donacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -135,5 +136,41 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
         app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+    <ImageView
+        android:id="@+id/boton_modify_donacion"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="modificarDonacion"
+        android:src="@drawable/ic_person_edit"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/boton_guardar_donacion"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="guardarDonacion"
+        android:src="@drawable/ic_person_save"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/boton_eliminar_donacion"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="eliminarDonacion"
+        android:src="@drawable/ic_person_remove"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_guardar_donacion" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,6 @@
 package ar.ndato.donantesdesangre.vista;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -62,7 +61,8 @@ public class MainActivity extends ActividadPersistente {
 	}
 	
 	public void agregarDonacion(View view) {
-		Intent intent = new Intent(this, AgregarDonacionActivity.class);
+		Intent intent = new Intent(this, ABMDonacionActivity.class);
+		intent.putExtra("tipo", ABMDonacionActivity.ALTA);
 		startActivityForResult(intent, CODE_ALTA);
 	}
 	

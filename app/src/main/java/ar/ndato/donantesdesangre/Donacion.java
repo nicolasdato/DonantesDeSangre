@@ -35,7 +35,11 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 	
 	@Override
 	public int hashCode() {
-		return fecha.hashCode() ^ receptor.hashCode();
+		int hash = 0;
+		if (getReceptor() != null) {
+			hash ^= getReceptor().hashCode();
+		}
+		return hash ^ getFecha().hashCode();
 	}
 
 	/**
@@ -81,6 +85,9 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 		if (this.getFecha().before(o.getFecha())) {
 			return 1;
 		}
-		return this.getReceptor().compareTo(o.getReceptor());
+		if (this.getReceptor() != null) {
+			return this.getReceptor().compareTo(o.getReceptor());
+		}
+		return 0;
 	}
 }

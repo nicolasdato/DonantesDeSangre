@@ -62,8 +62,19 @@ public class DonantesDeSangre implements Serializable {
      *
      */
     public void quitarDonante(Persona persona) {
-    	if (!persona.equals(yo)) {
+    	Set<Donacion> aEliminar = new HashSet<>();
+	    if (!persona.equals(yo)) {
 		    donantes.remove(persona);
+		    for (Persona donante : donantes.keySet()) {
+		    	for (Donacion donacion : donantes.get(donante)) {
+		    		if (donacion.getReceptor().equals(persona)) {
+		    		    aEliminar.add(donacion);
+				    }
+			    }
+			    for (Donacion donacion :aEliminar) {
+		    		donantes.get(donante).remove(donacion);
+			    }
+		    }
 	    }
     }
 	

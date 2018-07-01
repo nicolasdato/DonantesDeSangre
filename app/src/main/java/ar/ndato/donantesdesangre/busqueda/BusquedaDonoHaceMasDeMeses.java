@@ -34,10 +34,9 @@ public class BusquedaDonoHaceMasDeMeses extends BusquedaCondicion {
 			return true;
 		}
 
-		hoy.add(Calendar.DAY_OF_MONTH, -ultimaDonacion.get(Calendar.DAY_OF_MONTH));
-		hoy.add(Calendar.MONTH, -ultimaDonacion.get(Calendar.MONTH));
-		hoy.add(Calendar.YEAR, -ultimaDonacion.get(Calendar.YEAR));
+		long hoyms = hoy.getTimeInMillis();
+		long ultimams = ultimaDonacion.getTimeInMillis();
 
-		return hoy.get(Calendar.YEAR) * 12 + hoy.get(Calendar.MONTH) >= meses;
+		return (hoyms - ultimams) >= meses * 30l * 24l * 60l * 60l * 1000l;
 	}
 }

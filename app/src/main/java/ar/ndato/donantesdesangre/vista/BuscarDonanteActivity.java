@@ -6,11 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
@@ -48,26 +44,26 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		Spinner ultimaDonacion = findViewById(R.id.ultima_donacion);
 		sangre.setEnabled(false);
 		ultimaDonacion.setEnabled(false);
-		if (donador != null) {
-			swDonar.setChecked(true);
+		if (receptor != null) {
 			swRecibir.setChecked(false);
 			swTs.setChecked(false);
+			swDonar.setChecked(true);
 			clickSwitch(swDonar);
 			for(int i = 0; i < sangre.getCount(); i++) {
 				AbstractSangreFactory asf = new SangreStringFactory((String)sangre.getItemAtPosition(i));
-				if(donador.getSangre().equals(asf.crearSangre())) {
+				if(receptor.getSangre().equals(asf.crearSangre())) {
 					sangre.setSelection(i);
 					break;
 				}
 			}
-		} else if (receptor != null) {
+		} else if (donador != null) {
 			swDonar.setChecked(false);
-			swRecibir.setChecked(true);
 			swTs.setChecked(false);
+			swRecibir.setChecked(true);
 			clickSwitch(swRecibir);
 			for(int i = 0; i < sangre.getCount(); i++) {
 				AbstractSangreFactory asf = new SangreStringFactory((String)sangre.getItemAtPosition(i));
-				if(receptor.getSangre().equals(asf.crearSangre())) {
+				if(donador.getSangre().equals(asf.crearSangre())) {
 					sangre.setSelection(i);
 					break;
 				}

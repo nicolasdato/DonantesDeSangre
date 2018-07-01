@@ -145,6 +145,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		if (yearidx >= 0 && yearidx < anio.getCount()) {
 			anio.setSelection(yearidx);
 		}
+		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
 	}
 	
 	
@@ -155,6 +156,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		findViewById(R.id.boton_modify_persona).setVisibility(View.INVISIBLE);
 		findViewById(R.id.boton_eliminar_persona).setVisibility(View.INVISIBLE);
 		findViewById(R.id.boton_buscar_donante).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_buscar_donaciones).setVisibility(View.INVISIBLE);
 	}
 	
 	private void enVista() {
@@ -168,6 +170,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 			findViewById(R.id.boton_eliminar_persona).setVisibility(View.VISIBLE);
 		}
 		findViewById(R.id.boton_buscar_donante).setVisibility(View.VISIBLE);
+		findViewById(R.id.boton_buscar_donaciones).setVisibility(View.VISIBLE);
 	}
 	
 	private void enEdicion() {
@@ -177,6 +180,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		findViewById(R.id.boton_modify_persona).setVisibility(View.INVISIBLE);
 		findViewById(R.id.boton_eliminar_persona).setVisibility(View.INVISIBLE);
 		findViewById(R.id.boton_buscar_donante).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_buscar_donaciones).setVisibility(View.INVISIBLE);
 	}
 	
 	private void cambiarEditable(boolean estado) {
@@ -321,6 +325,12 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		dialog.setPositiveButton(R.string.done, listenerBuscar);
 		dialog.setNegativeButton(R.string.reciba, listenerBuscar);
 		dialog.create().show();
+	}
+	
+	public void buscarDonaciones(View view) {
+		Intent intent = new Intent(this, VerDonacionesActivity.class);
+		intent.putExtra("donante", donante);
+		startActivity(intent);
 	}
 	
 	public Persona crearDonante(View view) {

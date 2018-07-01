@@ -201,10 +201,22 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="24dp"
         android:onClick="buscarDonante"
-        android:src="@drawable/ic_person_buscar"
+        android:src="@drawable/ic_search"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/boton_buscar_donaciones"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="buscarDonaciones"
+        android:src="@drawable/ic_person_donaciones"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donante" />
 
     <ImageView
         android:id="@+id/boton_modify_persona"
@@ -216,7 +228,7 @@
         android:src="@drawable/ic_person_edit"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donante" />
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donaciones" />
 
     <ImageView
         android:id="@+id/boton_guardar_persona"
@@ -228,7 +240,7 @@
         android:src="@drawable/ic_person_save"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donante" />
+        app:layout_constraintEnd_toStartOf="@+id/boton_buscar_donaciones" />
 
     <ImageView
         android:id="@+id/boton_eliminar_persona"

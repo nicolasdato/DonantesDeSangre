@@ -24,7 +24,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <!--
-        <activity android:name=".AgregarDonacionActivity"
+        <activity android:name=".ABMDonacionActivity"
             android:parentActivityName=".MainActivity" >
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -39,7 +39,7 @@
 
         <activity android:name=".ListarDonantesActivity" />
         <activity android:name=".VerDonacionesActivity" />
-        <activity android:name=".AgregarDonacionActivity"
+        <activity android:name=".ABMDonacionActivity"
             android:windowSoftInputMode="stateHidden" />
     </application>
 

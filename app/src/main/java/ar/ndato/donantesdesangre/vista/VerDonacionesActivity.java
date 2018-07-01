@@ -26,6 +26,8 @@ public class VerDonacionesActivity extends ActividadPersistente {
 	
 	private Persona donante;
 	
+	private final int CODE_MODIFICACION = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class VerDonacionesActivity extends ActividadPersistente {
 			favorito.setImageResource(R.drawable.ic_star_border);
 		}
 		
-		RecyclerView rw = findViewById(R.id.donaciones);
+		RecyclerView rw = findViewById(R.id.donacionesView);
 		rw.setHasFixedSize(true);
 		rw.setLayoutManager(new LinearLayoutManager(this));
 		rw.addItemDecoration(new DividerItemDecoration(rw.getContext(), DividerItemDecoration.VERTICAL));
@@ -64,6 +66,16 @@ public class VerDonacionesActivity extends ActividadPersistente {
 	public void onRestoreInstanceState(Bundle bundle) {
 		super.onRestoreInstanceState(bundle);
 		donante = (Persona)bundle.getSerializable("donante");
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK && requestCode == CODE_MODIFICACION) {
+			RecyclerView rw = findViewById(R.id.donacionesView);
+			rw.setAdapter(new VerDonacionesActivity.ListarAdapter(donante));
+			TextView donaciones = findViewById(R.id.donaciones);
+			donaciones.setText(String.valueOf(getDonantesDeSangre().getDonaciones(donante).size()));
+		}
 	}
 	
 	protected class ListarAdapter extends RecyclerView.Adapter<VerDonacionesActivity.ListarAdapter.ViewHolder> implements View.OnClickListener {
@@ -93,12 +105,13 @@ public class VerDonacionesActivity extends ActividadPersistente {
 		
 		@Override
 		public void onClick(View view) {
-			RecyclerView rw = findViewById(R.id.donaciones);
+			RecyclerView rw = findViewById(R.id.donacionesView);
 			int idx = rw.getChildLayoutPosition(view);
-			Intent intent = new Intent();
-			intent.putExtra("donante", donaciones.get(idx).getReceptor());
-			setResult(RESULT_OK, intent);
-			finish();
+			Intent intent = new Intent(VerDonacionesActivity.this, ABMDonacionActivity.class);
+			intent.putExtra("donacion", donaciones.get(idx));
+			intent.putExtra("donador", donante);
+			intent.putExtra("tipo", ABMDonacionActivity.MODIFICACION);
+			startActivityForResult(intent, CODE_MODIFICACION);
 		}
 		
 		public class ViewHolder extends RecyclerView.ViewHolder {
@@ -115,8 +128,14 @@ public class VerDonacionesActivity extends ActividadPersistente {
 					TextView nombre = layout.findViewById(R.id.nombre);
 					TextView sangre = layout.findViewById(R.id.sangre);
 					TextView fecha = layout.findViewById(R.id.fecha);
-					nombre.setText(donacion.getReceptor().getNombre());
-					sangre.setText(donacion.getReceptor().getSangre().toString());
+					if (donacion.getReceptor() != null) {
+						nombre.setText(donacion.getReceptor().getNombre());
+						sangre.setText(donacion.getReceptor().getSangre().toString());
+					}
+					else {
+						nombre.setText(getText(R.string.sin_receptor_especifico));
+						sangre.setText("");
+					}
 					fecha.setText(dateFormat.format(donacion.getFecha().getTime()));
 				}
 			}

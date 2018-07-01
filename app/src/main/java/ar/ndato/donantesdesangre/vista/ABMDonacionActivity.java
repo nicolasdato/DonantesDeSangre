@@ -1,7 +1,6 @@
 package ar.ndato.donantesdesangre.vista;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,18 +21,24 @@ import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.visitor.VisitorDonaA;
 
-public class AgregarDonacionActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
+public class ABMDonacionActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
+	
+	public static final int ALTA = 0;
+	public static final int MODIFICACION = 1;
 	
 	private final int CODE_DONADOR = 0;
-	private final int CODE_RECEPTOR = 0;
+	private final int CODE_RECEPTOR = 1;
 	
 	private Persona donador = null;
 	private Persona receptor = null;
 	
+	private int tipo = ALTA;
+	private Donacion donacion = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_agregar_donacion);
+		setContentView(R.layout.activity_abm_donacion);
 		
 		Spinner anio = findViewById(R.id.anio);
 		List<Integer> anios = new ArrayList<>();
@@ -53,6 +58,88 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 		
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
+		
+		tipo = getIntent().getExtras().getInt("tipo", ALTA);
+		switch (tipo) {
+			case ALTA:
+				enAlta();
+				break;
+			case MODIFICACION:
+				donacion = (Donacion)getIntent().getSerializableExtra("donacion");
+				donador = (Persona)getIntent().getSerializableExtra("donador");
+				enVista();
+				setDatos(donador, donacion);
+				break;
+		}
+	}
+	
+	private void setDatos(Persona donador, Donacion donacion) {
+		if (donacion != null && donador != null) {
+			Switch switchReceptor = findViewById(R.id.switch_receptor);
+			switchReceptor.setChecked(donacion.getReceptor() != null);
+			clickSwitchReceptor(switchReceptor);
+			if (donacion.getReceptor() != null) {
+				TextView text = findViewById(R.id.receptor);
+				text.setText(donacion.getReceptor().getNombre());
+				receptor = donacion.getReceptor();
+			}
+			TextView text = findViewById(R.id.donador);
+			text.setText(donador.getNombre());
+			Spinner dia = findViewById(R.id.dia);
+			Spinner mes = findViewById(R.id.mes);
+			Spinner anio = findViewById(R.id.anio);
+			int dof = donacion.getFecha().get(Calendar.DAY_OF_MONTH);
+			dia.setSelection(dof - 1);
+			int month = donacion.getFecha().get(Calendar.MONTH);
+			mes.setSelection(month);
+			int year = donacion.getFecha().get(Calendar.YEAR);
+			int yearidx = year - (Integer)anio.getItemAtPosition(0);
+			if (yearidx >= 0 && yearidx < anio.getCount()) {
+				anio.setSelection(yearidx);
+			}
+			actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
+		}
+	}
+	
+	private void enAlta() {
+		habilitarTodo(false);
+		findViewById(R.id.boton_agregar_donacion).setVisibility(View.VISIBLE);
+		findViewById(R.id.boton_guardar_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_modify_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_eliminar_donacion).setVisibility(View.INVISIBLE);
+	}
+	
+	private void enVista() {
+		deshabilitarTodo(true);
+		findViewById(R.id.boton_agregar_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_guardar_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_modify_donacion).setVisibility(View.VISIBLE);
+		findViewById(R.id.boton_eliminar_donacion).setVisibility(View.VISIBLE);
+	}
+	
+	private void enEdicion() {
+		habilitarTodo(true);
+		findViewById(R.id.boton_agregar_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_guardar_donacion).setVisibility(View.VISIBLE);
+		findViewById(R.id.boton_modify_donacion).setVisibility(View.INVISIBLE);
+		findViewById(R.id.boton_eliminar_donacion).setVisibility(View.INVISIBLE);
+	}
+	
+	private void cambiarEditable(boolean estado, boolean edicion) {
+		int ids[] = {R.id.mes, R.id.anio, R.id.dia, R.id.switch_receptor};
+		for(int id : ids) {
+			findViewById(id).setEnabled(estado);
+		}
+		findViewById(R.id.boton_buscar_donador).setVisibility(!estado || edicion ? View.INVISIBLE : View.VISIBLE);
+		findViewById(R.id.boton_buscar_receptor).setVisibility(estado ? View.VISIBLE : View.INVISIBLE);
+	}
+	
+	private void habilitarTodo(boolean edicion) {
+		cambiarEditable(true, edicion);
+	}
+	
+	private void deshabilitarTodo(boolean edicion) {
+		cambiarEditable(false, edicion);
 	}
 	
 	private void actualizarCantidadDeDias(Spinner dia, Integer anio, Integer mes) {
@@ -72,6 +159,8 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 		super.onSaveInstanceState(bundle);
 		bundle.putSerializable("donador", donador);
 		bundle.putSerializable("receptor", receptor);
+		bundle.putSerializable("donacion", donacion);
+		bundle.putInt("tipo", tipo);
 	}
 	
 	@Override
@@ -79,6 +168,41 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 		super.onRestoreInstanceState(bundle);
 		donador = (Persona)bundle.getSerializable("donador");
 		receptor = (Persona)bundle.getSerializable("receptor");
+		donacion = (Donacion)bundle.getSerializable("donacion");
+		tipo = bundle.getInt("tipo");
+	}
+	public void modificarDonacion(View view) {
+		enEdicion();
+	}
+	
+	public void eliminarDonacion(View view) {
+		DialogInterface.OnClickListener listenerEliminar = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which){
+					case DialogInterface.BUTTON_POSITIVE:
+						getDonantesDeSangre().quitarDonacion(donador, donacion);
+						setResult(RESULT_OK);
+						finish();
+						break;
+					
+					case DialogInterface.BUTTON_NEGATIVE:
+						break;
+				}
+			}
+		};
+		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		dialog.setMessage(R.string.pergunta_eliminar_donacion);
+		dialog.setTitle(R.string.pergunta_eliminar_donacion_title);
+		dialog.setCancelable(false);
+		dialog.setPositiveButton(R.string.ok, listenerEliminar);
+		dialog.setNegativeButton(R.string.no, listenerEliminar);
+		dialog.create().show();
+	}
+	
+	public void guardarDonacion(View view) {
+		agregarDonacionEsEdicion(true);
+		enVista();
 	}
 	
 	public void buscarDonador(View view) {
@@ -98,12 +222,16 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 	}
 	
 	public void agregarDonacion(View view) {
+		agregarDonacionEsEdicion(false);
+	}
+	
+	public void agregarDonacionEsEdicion(final boolean edicion) {
 		Switch receptorSwitch = findViewById(R.id.switch_receptor);
 		if (donador == null) {
-			Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), getText(R.string.falta_donador), Snackbar.LENGTH_SHORT);
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.abm_donacion_activity), getText(R.string.falta_donador), Snackbar.LENGTH_SHORT);
 			mensaje.show();
 		} else if (receptor == null && receptorSwitch.isChecked()) {
-			Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), getText(R.string.falta_receptor), Snackbar.LENGTH_SHORT);
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.abm_donacion_activity), getText(R.string.falta_receptor), Snackbar.LENGTH_SHORT);
 			mensaje.show();
 		} else {
 			Spinner mes = findViewById(R.id.mes);
@@ -123,7 +251,7 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 						public void onClick(DialogInterface dialog, int which) {
 							switch (which){
 								case DialogInterface.BUTTON_POSITIVE:
-									nuevaDonacion(donador, donacion);
+									nuevaDonacion(donador, donacion, edicion);
 									break;
 								
 								case DialogInterface.BUTTON_NEGATIVE:
@@ -142,16 +270,23 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 				}
 			}
 
-			nuevaDonacion(donador, donacion);
+			nuevaDonacion(donador, donacion, edicion);
 		}
 	}
 	
-	private void nuevaDonacion(Persona donador, Donacion donacion) {
+	private void nuevaDonacion(Persona donador, Donacion donacion, boolean edicion) {
 		getDonantesDeSangre().agregarDonacion(donador, donacion);
-		Intent intentResult = new Intent();
-		intentResult.putExtra("texto", getText(R.string.donacion_agregada));
-		setResult(RESULT_OK, intentResult);
-		finish();
+		if (!edicion) {
+			Intent intentResult = new Intent();
+			intentResult.putExtra("texto", R.string.donacion_agregada);
+			setResult(RESULT_OK, intentResult);
+			finish();
+		} else {
+			getDonantesDeSangre().quitarDonacion(donador, this.donacion);
+			this.donacion = donacion;
+			Snackbar mensaje = Snackbar.make(findViewById(R.id.abm_donacion_activity), getText(R.string.donacion_guardada), Snackbar.LENGTH_SHORT);
+			mensaje.show();
+		}
 	}
 	
 	public void clickSwitchReceptor(View view) {
@@ -178,11 +313,16 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 					donadorText.setText(persona.getNombre());
 				}
 			} else if (requestCode == CODE_RECEPTOR) {
+				Switch receptorSwitch = findViewById(R.id.switch_receptor);
 				persona = (Persona)data.getSerializableExtra("donante");
 				if (persona != null) {
+					receptorSwitch.setChecked(true);
 					receptor = persona;
 					TextView receptorText = findViewById(R.id.receptor);
 					receptorText.setText(persona.getNombre());
+				} else {
+					receptorSwitch.setChecked(false);
+					clickSwitchReceptor(receptorSwitch);
 				}
 			}
 		}
