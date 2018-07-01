@@ -11,9 +11,9 @@ import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
 
 public class MainActivity extends ActividadPersistente {
 	private final int CODE_LISTAR = 0;
-	private final int CODE_ABM = 1;
+	private final int CODE_ALTA = 1;
 	private final int CODE_REGRESA_ABM = 2;
-	private final int CODE_ALTA = 3;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,11 @@ public class MainActivity extends ActividadPersistente {
 		Intent intent = new Intent(this, ABMDonanteActivity.class);
 		if (getDonantesDeSangre().getYo() == null) {
 			intent.putExtra("tipo", ABMDonanteActivity.ALTA_YO);
-			startActivityForResult(intent, CODE_ABM);
+			startActivityForResult(intent, CODE_ALTA);
 		} else {
 			intent.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
 			intent.putExtra("donante", getDonantesDeSangre().getYo());
-			startActivity(intent);
+			startActivityForResult(intent, CODE_ALTA);
 		}
 	}
 	

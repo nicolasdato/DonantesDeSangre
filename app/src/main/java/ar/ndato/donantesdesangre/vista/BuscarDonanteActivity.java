@@ -2,10 +2,15 @@ package ar.ndato.donantesdesangre.vista;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
@@ -33,13 +38,16 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar_donante);
-		intentParaBusqueda = (Intent)getIntent().getSerializableExtra("intent");
+		intentParaBusqueda = (Intent)getIntent().getParcelableExtra("intent");
 		Persona donador = (Persona)getIntent().getSerializableExtra("donador");
 		Persona receptor = (Persona)getIntent().getSerializableExtra("receptor");
-		Switch swDonar = findViewById(R.id.switch_donar_a);
-		Switch swRecibir = findViewById(R.id.switch_recibir_de);
-		Switch swTs = findViewById(R.id.switch_tiene_sangre);
+		CheckBox swDonar = findViewById(R.id.switch_donar_a);
+		CheckBox swRecibir = findViewById(R.id.switch_recibir_de);
+		CheckBox swTs = findViewById(R.id.switch_tiene_sangre);
 		Spinner sangre = findViewById(R.id.sangre);
+		Spinner ultimaDonacion = findViewById(R.id.ultima_donacion);
+		sangre.setEnabled(false);
+		ultimaDonacion.setEnabled(false);
 		if (donador != null) {
 			swDonar.setChecked(true);
 			swRecibir.setChecked(false);
@@ -67,11 +75,23 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		}
 	}
 	
+	@Override
+	public void onSaveInstanceState(Bundle bundle) {
+		super.onSaveInstanceState(bundle);
+		bundle.putParcelable("intentParaBusqueda", intentParaBusqueda);
+	}
+	
+	@Override
+	public void onRestoreInstanceState(Bundle bundle) {
+		super.onRestoreInstanceState(bundle);
+		intentParaBusqueda = (Intent)bundle.getParcelable("intentParaBusqueda");
+	}
+	
 	public void clickSwitch(View view) {
-		Switch sw = (Switch)view;
-		Switch swDonar = findViewById(R.id.switch_donar_a);
-		Switch swRecibir = findViewById(R.id.switch_recibir_de);
-		Switch swTs = findViewById(R.id.switch_tiene_sangre);
+		CheckBox sw = (CheckBox)view;
+		CheckBox swDonar = findViewById(R.id.switch_donar_a);
+		CheckBox swRecibir = findViewById(R.id.switch_recibir_de);
+		CheckBox swTs = findViewById(R.id.switch_tiene_sangre);
 		switch (view.getId()) {
 			case R.id.switch_nombre:
 				findViewById(R.id.nombre).setEnabled(sw.isChecked());
@@ -86,19 +106,24 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 				break;
 				
 			case R.id.switch_tiene_sangre:
-				if (swTs.isChecked()) {
-					swRecibir.setChecked(false);
-					swDonar.setChecked(false);
-				}
 			case R.id.switch_donar_a:
 			case R.id.switch_recibir_de:
+				 if (swTs.isChecked()) {
+					if (view.getId() == R.id.switch_donar_a || view.getId() == R.id.switch_recibir_de) {
+						swTs.setChecked(false);
+					}
+					else {
+						swRecibir.setChecked(false);
+						swDonar.setChecked(false);
+					}
+				}
 				findViewById(R.id.sangre).setEnabled(swDonar.isChecked() || swRecibir.isChecked() || swTs.isChecked());
 				break;
 				
 			case R.id.switch_edad_mayor:
 			case R.id.switch_edad_menor: {
-				Switch sw1 = findViewById(R.id.switch_edad_mayor);
-				Switch sw2 = findViewById(R.id.switch_edad_menor);
+				CheckBox sw1 = findViewById(R.id.switch_edad_mayor);
+				CheckBox sw2 = findViewById(R.id.switch_edad_menor);
 				findViewById(R.id.edad).setEnabled(sw1.isChecked() || sw2.isChecked());
 				break;
 			}
@@ -113,23 +138,29 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		Busqueda busqueda = new BusquedaBase();
 		int spinner_ultima_donacion_to_int[] = {1, 2, 6, 12, 24};
 		
-		Switch swNombre = findViewById(R.id.switch_nombre);
-		Switch swProvincia = findViewById(R.id.switch_provincia);
-		Switch swLocalidad = findViewById(R.id.switch_localidad);
-		Switch swMayorA = findViewById(R.id.switch_edad_mayor);
-		Switch swMenorA = findViewById(R.id.switch_edad_menor);
-		Switch swDonaA = findViewById(R.id.switch_donar_a);
-		Switch swTieneSangre = findViewById(R.id.switch_tiene_sangre);
-		Switch swRecibeDe = findViewById(R.id.switch_recibir_de);
-		Switch swEsFavorito = findViewById(R.id.switch_es_favorito);
-		Switch swUltimaDonacion = findViewById(R.id.switch_ultima_donacion);
+		CheckBox swNombre = findViewById(R.id.switch_nombre);
+		CheckBox swProvincia = findViewById(R.id.switch_provincia);
+		CheckBox swLocalidad = findViewById(R.id.switch_localidad);
+		CheckBox swMayorA = findViewById(R.id.switch_edad_mayor);
+		CheckBox swMenorA = findViewById(R.id.switch_edad_menor);
+		CheckBox swDonaA = findViewById(R.id.switch_donar_a);
+		CheckBox swTieneSangre = findViewById(R.id.switch_tiene_sangre);
+		CheckBox swRecibeDe = findViewById(R.id.switch_recibir_de);
+		CheckBox swEsFavorito = findViewById(R.id.switch_es_favorito);
+		CheckBox swUltimaDonacion = findViewById(R.id.switch_ultima_donacion);
 		TextView nombre = findViewById(R.id.nombre);
 		TextView provincia = findViewById(R.id.provincia);
 		TextView localidad = findViewById(R.id.localidad);
 		TextView edad = findViewById(R.id.edad);
 		Spinner sangre = findViewById(R.id.sangre);
 		Spinner ultima_donacion = findViewById(R.id.ultima_donacion);
-		
+		if (swMayorA.isChecked() || swMenorA.isChecked()) {
+			if (edad.getText().toString().isEmpty()) {
+				Snackbar mensaje = Snackbar.make(view, R.string.edad_sin_completar, Snackbar.LENGTH_SHORT);
+				mensaje.show();
+				return;
+			}
+		}
 		if (swNombre.isChecked()) {
 			busqueda = new BusquedaNombre(nombre.getText().toString(), busqueda);
 		}
@@ -139,11 +170,17 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		if (swLocalidad.isChecked()) {
 			busqueda = new BusquedaLocalidad(localidad.getText().toString(), busqueda);
 		}
-		if (swMayorA.isChecked()) {
-			busqueda = new BusquedaEdadMayorA(Integer.getInteger(edad.getText().toString()), busqueda);
-		}
-		if (swMenorA.isChecked()) {
-			busqueda = new BusquedaEdadMenorA(Integer.getInteger(edad.getText().toString()), busqueda);
+		try {
+			if (swMayorA.isChecked()) {
+				busqueda = new BusquedaEdadMayorA(Integer.parseInt(edad.getText().toString()), busqueda);
+			}
+			if (swMenorA.isChecked()) {
+				busqueda = new BusquedaEdadMenorA(Integer.parseInt(edad.getText().toString()), busqueda);
+			}
+		} catch (NumberFormatException ex) {
+			Snackbar mensaje = Snackbar.make(view, R.string.edad_mal_formada, Snackbar.LENGTH_SHORT);
+			mensaje.show();
+			return;
 		}
 		if (swDonaA.isChecked()) {
 			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());

@@ -25,7 +25,6 @@
         android:text="@string/agegar_donante"
         app:layout_constraintBottom_toTopOf="@+id/listar_todos"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toEndOf="@+id/button2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -36,7 +35,6 @@
         android:onClick="buscarDonante"
         android:text="@string/buscar_donante"
         app:layout_constraintBottom_toBottomOf="@+id/listar_todos"
-        app:layout_constraintEnd_toStartOf="@+id/listar_todos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/listar_todos" />
 
@@ -156,7 +154,6 @@
         android:onClick="misDatos"
         android:text="@string/mis_datos"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAgegar"
-        app:layout_constraintEnd_toStartOf="@+id/buttonAgegar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonAgegar" />
 
@@ -175,7 +172,6 @@
         android:text="@string/listar_todos"
         app:layout_constraintBottom_toTopOf="@+id/buttonDonacion"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toEndOf="@+id/buttonBuscar"
         app:layout_constraintTop_toBottomOf="@+id/buttonAgegar" />
 
     <Button

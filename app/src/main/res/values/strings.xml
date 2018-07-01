@@ -62,6 +62,8 @@
     <string name="donacion_agregada">Donación agregada</string>
     <string name="pergunta_donacion_no_compatible">El donador y el receptor no son compatibles para la donación, continuar de todas formas?</string>
     <string name="pergunta_donacion_no_compatible_title">Sangre no compatible</string>
+    <string name="edad_sin_completar">Edad sin completar</string>
+    <string name="edad_mal_formada">Edad mal escrita</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>

@@ -50,14 +50,20 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
 			anios.add(a);
 		}
-		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, anios);
+		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, anios);
 		anio.setAdapter(aniosAdapter);
 		anio.setSelection(0);
 		Spinner mes = findViewById(R.id.mes);
+		ArrayAdapter<String> mesAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, getResources().getStringArray(R.array.meses));
+		mes.setAdapter(mesAdapter);
 		mes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
 		Spinner dia = findViewById(R.id.dia);
 		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
 		dia.setSelection(Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1);
+		Spinner sangre = findViewById(R.id.sangre);
+		ArrayAdapter<String> sangreAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, getResources().getStringArray(R.array.sangres));
+		sangre.setAdapter(sangreAdapter);
+		sangre.setSelection(0);
 		
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
@@ -196,7 +202,7 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		for (Integer d = 1; d <= maxDias; d++) {
 			dias.add(d);
 		}
-		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dias);
+		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, dias);
 		dia.setAdapter(diasAdapter);
 	}
 	
@@ -228,7 +234,11 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 			getDonantesDeSangre().agregarDonante(persona);
 			if (agregarYo) {
 				persona.setFavorito(true);
-				getDonantesDeSangre().setYo(persona);
+				if (getDonantesDeSangre().getYo() == null) {
+					getDonantesDeSangre().setYo(persona);
+				} else {
+					getDonantesDeSangre().modificarDonante(getDonantesDeSangre().getYo(), persona);
+				}
 			}
 			Intent intent = new Intent();
 			intent.putExtra("texto", R.string.agregado_correcto);

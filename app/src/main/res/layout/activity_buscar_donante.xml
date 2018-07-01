@@ -71,10 +71,11 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/switch_donar_a" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/nombre"
@@ -82,10 +83,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/nombre"
                 app:layout_constraintTop_toTopOf="@+id/nombre" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_localidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/localidad"
@@ -93,10 +95,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/localidad"
                 app:layout_constraintTop_toTopOf="@+id/localidad" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_provincia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/provincia"
@@ -117,22 +120,25 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/switch_edad_menor" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_edad_menor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/edad_menor_a"
                 app:layout_constraintBottom_toTopOf="@+id/switch_edad_mayor"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/switch_provincia" />
+                app:layout_constraintTop_toBottomOf="@+id/switch_provincia"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_donar_a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
@@ -141,10 +147,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/switch_edad_mayor" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_edad_mayor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/edad_mayor_a"
@@ -152,10 +159,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/switch_edad_menor" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_recibir_de"
                 android:layout_width="wrap_content"
-                android:layout_height="31dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:checked="false"
                 android:onClick="clickSwitch"
                 android:text="@string/puede_recibir_de"
@@ -170,34 +178,37 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.5" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_es_favorito"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/solo_favoritos"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/switch_ultima_donacion" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_tiene_sangre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:onClick="clickSwitch"
                 android:text="@string/tiene_sangre"
                 app:layout_constraintBottom_toTopOf="@+id/switch_ultima_donacion"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/switch_recibir_de" />
 
-            <Switch
+            <CheckBox
                 android:id="@+id/switch_ultima_donacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/ultima_donacion"
                 android:onClick="clickSwitch"
+                android:text="@string/ultima_donacion"
                 app:layout_constraintBottom_toTopOf="@+id/switch_es_favorito"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@+id/switch_tiene_sangre" />
@@ -206,11 +217,10 @@
                 android:id="@+id/ultima_donacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:entries="@array/ultima_donacion"
                 android:enabled="false"
+                android:entries="@array/ultima_donacion"
                 app:layout_constraintBottom_toBottomOf="@+id/switch_ultima_donacion"
-                app:layout_constraintStart_toEndOf="@+id/switch_ultima_donacion"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/switch_ultima_donacion" />
 
         </android.support.constraint.ConstraintLayout>

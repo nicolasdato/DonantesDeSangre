@@ -40,10 +40,12 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 		for (Integer a = Calendar.getInstance().get(Calendar.YEAR); a >= 1900; a--) {
 			anios.add(a);
 		}
-		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, anios);
+		ArrayAdapter<Integer> aniosAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, anios);
 		anio.setAdapter(aniosAdapter);
 		anio.setSelection(0);
 		Spinner mes = findViewById(R.id.mes);
+		ArrayAdapter<String> mesAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, getResources().getStringArray(R.array.meses));
+		mes.setAdapter(mesAdapter);
 		mes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
 		Spinner dia = findViewById(R.id.dia);
 		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
@@ -61,7 +63,7 @@ public class AgregarDonacionActivity extends ActividadPersistente implements Ada
 		for (Integer d = 1; d <= maxDias; d++) {
 			dias.add(d);
 		}
-		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dias);
+		ArrayAdapter<Integer> diasAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, dias);
 		dia.setAdapter(diasAdapter);
 	}
 	
