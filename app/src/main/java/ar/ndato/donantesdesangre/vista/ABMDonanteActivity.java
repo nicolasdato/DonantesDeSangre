@@ -141,11 +141,17 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		int month = donante.getNacimiento().get(Calendar.MONTH);
 		mes.setSelection(month);
 		int year = donante.getNacimiento().get(Calendar.YEAR);
-		int yearidx = year - (Integer)anio.getItemAtPosition(0);
+		int yearidx = (Integer)anio.getItemAtPosition(0) - year;
 		if (yearidx >= 0 && yearidx < anio.getCount()) {
 			anio.setSelection(yearidx);
 		}
+		Integer seleccionado = dia.getSelectedItemPosition();
 		actualizarCantidadDeDias(dia, (Integer)anio.getSelectedItem(), mes.getSelectedItemPosition());
+		if(dia.getAdapter().getCount() > seleccionado) {
+			dia.setSelection(seleccionado);
+		} else {
+			dia.setSelection(0);
+		}
 	}
 	
 	
