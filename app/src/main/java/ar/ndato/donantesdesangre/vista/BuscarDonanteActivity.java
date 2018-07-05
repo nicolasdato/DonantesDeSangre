@@ -27,7 +27,6 @@ import ar.ndato.donantesdesangre.sangre.Sangre;
 
 public class BuscarDonanteActivity extends ActividadPersistente {
 	private final int CODE_BUSQUEDA = 0;
-	private final int CODE_INTENT = 1;
 	private Intent intentParaBusqueda = null;
 	
 	@Override
@@ -201,6 +200,7 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		}
 	
 		Intent intent = new Intent(this, ListarDonantesActivity.class);
+		intent.putExtra("intent", intentParaBusqueda);
 		intent.putExtra("busqueda", busqueda);
 		startActivityForResult(intent, CODE_BUSQUEDA);
 	}
@@ -211,19 +211,10 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		if (resultCode == RESULT_OK) {
 			if (data != null && requestCode == CODE_BUSQUEDA) {
 				Persona donante = (Persona) data.getSerializableExtra("donante");
-				if (intentParaBusqueda == null) {
-					Intent intent = new Intent();
-					intent.putExtra("donante", donante);
-					setResult(RESULT_OK, intent);
-					finish();
-				}
-				else {
-					intentParaBusqueda.putExtra("donante", donante);
-					startActivityForResult(intentParaBusqueda, CODE_INTENT);
-				}
-			}
-			if (requestCode == CODE_INTENT) {
-				buscarDonante(findViewById(R.id.boton_buscar_persona));
+				Intent intent = new Intent();
+				intent.putExtra("donante", donante);
+				setResult(RESULT_OK, intent);
+				finish();
 			}
 		}
 	}

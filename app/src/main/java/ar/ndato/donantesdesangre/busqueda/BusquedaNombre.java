@@ -7,11 +7,11 @@ public class BusquedaNombre extends BusquedaCondicion {
 	
 	public BusquedaNombre(String nombre, Busqueda busqueda) {
 		super(busqueda);
-		this.nombre = nombre;
+		this.nombre = nombre.toLowerCase();
 	}
 	
 	@Override
 	protected Boolean condicion(Persona persona) {
-		return persona.getNombre().contains(nombre);
+		return persona.getNombre().toLowerCase().contains(nombre);
 	}
 }

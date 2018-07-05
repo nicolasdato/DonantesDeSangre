@@ -11,8 +11,6 @@ import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
 public class MainActivity extends ActividadPersistente {
 	private final int CODE_LISTAR = 0;
 	private final int CODE_ALTA = 1;
-	private final int CODE_REGRESA_ABM = 2;
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,10 @@ public class MainActivity extends ActividadPersistente {
 	
 	public void listarTodos(View view) {
 		Intent intent = new Intent(this, ListarDonantesActivity.class);
+		Intent intentParaBusqueda = new Intent(this, ABMDonanteActivity.class);
 		intent.putExtra("busqueda", new BusquedaBase());
+		intentParaBusqueda.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
+		intent.putExtra("intent", intentParaBusqueda);
 		startActivityForResult(intent, CODE_LISTAR);
 	}
 	
@@ -75,24 +76,11 @@ public class MainActivity extends ActividadPersistente {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-			if (requestCode == CODE_REGRESA_ABM) {
-				listarTodos(findViewById(R.id.listar_todos));
-			}
 			if (data != null) {
-				if (requestCode == CODE_LISTAR) {
-					Persona donante = (Persona) data.getSerializableExtra("donante");
-					if (donante != null) {
-						Intent intent = new Intent(this, ABMDonanteActivity.class);
-						intent.putExtra("donante", donante);
-						intent.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
-						startActivityForResult(intent, CODE_REGRESA_ABM);
-					}
-				} else if (requestCode == CODE_ALTA) {
-					int resultado;
-					resultado = data.getExtras().getInt("texto");
-					Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);
-					mensaje.show();
-				}
+				int resultado;
+				resultado = data.getExtras().getInt("texto");
+				Snackbar mensaje = Snackbar.make(findViewById(R.id.main_activity), resultado, Snackbar.LENGTH_SHORT);
+				mensaje.show();
 			}
 		}
 	}

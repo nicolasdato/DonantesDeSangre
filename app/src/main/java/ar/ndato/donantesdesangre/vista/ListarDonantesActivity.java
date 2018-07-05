@@ -22,13 +22,15 @@ import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
 
 public class ListarDonantesActivity extends ActividadPersistente {
-	Busqueda busqueda;
+	private Busqueda busqueda;
+	private Intent intentParaBusqueda = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_listar_donantes);
 		busqueda = (Busqueda)getIntent().getSerializableExtra("busqueda");
+		intentParaBusqueda = (Intent)getIntent().getParcelableExtra("intent");
 		RecyclerView rw = findViewById(R.id.recycler);
 		rw.setHasFixedSize(true);
 		rw.setLayoutManager(new LinearLayoutManager(this));
@@ -40,12 +42,14 @@ public class ListarDonantesActivity extends ActividadPersistente {
 	public void onSaveInstanceState(Bundle bundle) {
 		super.onSaveInstanceState(bundle);
 		bundle.putSerializable("busqueda", busqueda);
+		bundle.putParcelable("intent", intentParaBusqueda);
 	}
 	
 	@Override
 	public void onRestoreInstanceState(Bundle bundle) {
 		super.onRestoreInstanceState(bundle);
 		busqueda = (Busqueda)bundle.getSerializable("busqueda");
+		intentParaBusqueda = (Intent)bundle.getParcelable("intent");
 	}
 	
 	@Override
@@ -89,10 +93,15 @@ public class ListarDonantesActivity extends ActividadPersistente {
 		public void onClick(View view) {
 			RecyclerView rw = findViewById(R.id.recycler);
 			int idx = rw.getChildLayoutPosition(view);
-			Intent intent = new Intent();
-			intent.putExtra("donante", donantes.get(idx));
-			setResult(RESULT_OK, intent);
-			finish();
+			if (intentParaBusqueda != null) {
+				intentParaBusqueda.putExtra("donante", donantes.get(idx));
+				startActivityForResult(intentParaBusqueda, 0);
+			} else {
+				Intent intent = new Intent();
+				intent.putExtra("donante", donantes.get(idx));
+				setResult(RESULT_OK, intent);
+				finish();
+			}
 		}
 		
 		public class ViewHolder extends RecyclerView.ViewHolder {

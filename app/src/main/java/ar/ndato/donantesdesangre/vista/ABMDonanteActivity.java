@@ -234,13 +234,10 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 	
 	public void agregarDonante(View view) {
 		Persona persona = crearDonante(view);
-		if (persona == null) {
-			Snackbar mensaje = Snackbar.make(view, R.string.error_crear_donante, Snackbar.LENGTH_LONG);
-			mensaje.show();
-		} else if (getDonantesDeSangre().getDonantes().contains(persona)) {
+		if (persona != null && getDonantesDeSangre().getDonantes().contains(persona)) {
 			Snackbar mensaje = Snackbar.make(view, R.string.persona_existente, Snackbar.LENGTH_LONG);
 			mensaje.show();
-		} else {
+		} else if (persona != null){
 			getDonantesDeSangre().agregarDonante(persona);
 			if (agregarYo) {
 				persona.setFavorito(true);

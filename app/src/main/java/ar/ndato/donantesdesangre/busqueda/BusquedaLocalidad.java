@@ -8,11 +8,11 @@ public class BusquedaLocalidad extends BusquedaCondicion {
 
 	public BusquedaLocalidad(String localidad, Busqueda busqueda) {
 		super(busqueda);
-		this.localidad = localidad;
+		this.localidad = localidad.toLowerCase();
 	}
 
 	@Override
 	protected Boolean condicion(Persona persona) {
-		return persona.getLocalidad().contains(localidad);
+		return persona.getLocalidad().toLowerCase().contains(localidad);
 	}
 }
