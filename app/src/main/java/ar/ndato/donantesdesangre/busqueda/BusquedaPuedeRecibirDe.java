@@ -1,22 +1,25 @@
 package ar.ndato.donantesdesangre.busqueda;
 
+import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.sangre.Sangre;
-import ar.ndato.donantesdesangre.visitor.VisitorRecibeDe;
+import ar.ndato.donantesdesangre.visitor.VisitorDonacion;
 
 public class BusquedaPuedeRecibirDe extends BusquedaCondicion {
 
 	private Sangre sangre;
+	private Donacion.TipoDonacion tipoDonacion;
 
-	public BusquedaPuedeRecibirDe(Sangre sangre, Busqueda busqueda) {
+	public BusquedaPuedeRecibirDe(Sangre sangre, Donacion.TipoDonacion tipoDonacion, Busqueda busqueda) {
 		super(busqueda);
 		this.sangre = sangre;
+		this.tipoDonacion = tipoDonacion;
 	}
 
 	@Override
 	protected Boolean condicion(Persona persona) {
-		VisitorRecibeDe visitor = persona.getSangre().getVisitorRecibeDe();
+		VisitorDonacion visitor = persona.getSangre().getVisitorDonacion(Donacion.Accion.RECIBIR, tipoDonacion);
 		sangre.accept(visitor);
-		return visitor.puedeRecibir();
+		return visitor.puede();
 	}
 }

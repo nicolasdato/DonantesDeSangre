@@ -19,7 +19,7 @@ import java.util.List;
 
 import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.Persona;
-import ar.ndato.donantesdesangre.visitor.VisitorDonaA;
+import ar.ndato.donantesdesangre.visitor.VisitorDonacion;
 
 public class ABMDonacionActivity extends ActividadPersistente implements AdapterView.OnItemSelectedListener {
 	
@@ -58,6 +58,10 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 		
 		anio.setOnItemSelectedListener(this);
 		mes.setOnItemSelectedListener(this);
+		
+		Spinner tipoDonacion = findViewById(R.id.tipodonacion);
+		ArrayAdapter<String> tipoAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, getResources().getStringArray(R.array.tipodonacion));
+		tipoDonacion.setAdapter(tipoAdapter);
 		
 		tipo = getIntent().getExtras().getInt("tipo", ALTA);
 		switch (tipo) {
@@ -104,6 +108,14 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 			} else {
 				dia.setSelection(0);
 			}
+			Spinner tipoDonacion = findViewById(R.id.tipodonacion);
+			if (donacion.getTipoDonacion() == Donacion.TipoDonacion.GLOBULOS_ROJOS) {
+				tipoDonacion.setSelection(1);
+			} else if (donacion.getTipoDonacion() == Donacion.TipoDonacion.SANGRE_COMPLETA) {
+				tipoDonacion.setSelection(0);
+			} else {
+				tipoDonacion.setSelection(2);
+			}
 		}
 	}
 	
@@ -132,7 +144,7 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 	}
 	
 	private void cambiarEditable(boolean estado, boolean edicion) {
-		int ids[] = {R.id.mes, R.id.anio, R.id.dia, R.id.switch_receptor};
+		int ids[] = {R.id.mes, R.id.anio, R.id.dia, R.id.switch_receptor, R.id.tipodonacion};
 		for(int id : ids) {
 			findViewById(id).setEnabled(estado);
 		}
@@ -243,13 +255,22 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 			Spinner mes = findViewById(R.id.mes);
 			Spinner anio = findViewById(R.id.anio);
 			Spinner dia = findViewById(R.id.dia);
+			Spinner spinnerTipoDonacion = findViewById(R.id.tipodonacion);
+			Donacion.TipoDonacion tipoDonacion;
+			if (spinnerTipoDonacion.getSelectedItemPosition() == 0) {
+				tipoDonacion = Donacion.TipoDonacion.SANGRE_COMPLETA;
+			} else if(spinnerTipoDonacion.getSelectedItemPosition() == 1) {
+				tipoDonacion = Donacion.TipoDonacion.GLOBULOS_ROJOS;
+			} else {
+				tipoDonacion = Donacion.TipoDonacion.PLASMA;
+			}
 			Calendar calendario = new GregorianCalendar((Integer)anio.getSelectedItem(), mes.getSelectedItemPosition(), dia.getSelectedItemPosition() + 1);
-			final Donacion donacion = new Donacion(receptor, calendario);
+			final Donacion donacion = new Donacion(receptor, calendario, tipoDonacion);
 			
 			if (receptorSwitch.isChecked()) {
-				VisitorDonaA visitor = donador.getSangre().getVisitorDonaA();
+				VisitorDonacion visitor = donador.getSangre().getVisitorDonacion(Donacion.Accion.DONAR, tipoDonacion);
 				receptor.getSangre().accept(visitor);
-				if (!visitor.puedeDonar()) {
+				if (!visitor.puede()) {
 					
 					DialogInterface.OnClickListener listenerEliminar = new DialogInterface.OnClickListener() {
 

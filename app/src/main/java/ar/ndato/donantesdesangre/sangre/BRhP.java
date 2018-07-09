@@ -1,4 +1,5 @@
 package ar.ndato.donantesdesangre.sangre;
+import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.visitor.*;
 
 public class BRhP extends SangreEquals {
@@ -11,13 +12,8 @@ public class BRhP extends SangreEquals {
 	}
 
 	@Override
-	public VisitorDonaA getVisitorDonaA() {
-		return new VisitorBRhPDonaA();
-	}
-
-	@Override
-	public VisitorRecibeDe getVisitorRecibeDe() {
-		return new VisitorBRhPRecibeDe();
+	public VisitorDonacion getVisitorDonacion(Donacion.Accion accion, Donacion.TipoDonacion tipoDonacion) {
+		return new VisitorBRhPDonacion(accion, tipoDonacion);
 	}
 
 	@Override

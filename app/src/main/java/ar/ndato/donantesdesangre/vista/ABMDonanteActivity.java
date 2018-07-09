@@ -303,20 +303,21 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 			public void onClick(DialogInterface dialog, int which) {
 				Busqueda busqueda = null;
 				Intent intent;
+				String intentStr = "donador";
 				switch (which){
 					case DialogInterface.BUTTON_POSITIVE: {
-						busqueda = new BusquedaPuedeRecibirDe(donante.getSangre(), new BusquedaBase());
+						intentStr = "donador";
 						break;
 					}
 					
 					case DialogInterface.BUTTON_NEGATIVE: {
-						busqueda = new BusquedaPuedeDonarA(donante.getSangre(), new BusquedaBase());
+						intentStr = "receptor";
 						break;
 					}
 				}
 				if (busqueda != null) {
-					intent = new Intent(ABMDonanteActivity.this, ListarDonantesActivity.class);
-					intent.putExtra("busqueda", busqueda);
+					intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
+					intent.putExtra(intentStr, donante);
 					startActivityForResult(intent, CODE_BUSQUEDA);
 				}
 			}

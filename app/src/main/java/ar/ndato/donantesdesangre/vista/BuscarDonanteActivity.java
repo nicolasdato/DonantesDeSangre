@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.Persona;
 import ar.ndato.donantesdesangre.busqueda.Busqueda;
 import ar.ndato.donantesdesangre.busqueda.BusquedaBase;
@@ -41,31 +42,41 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		CheckBox swTs = findViewById(R.id.switch_tiene_sangre);
 		Spinner sangre = findViewById(R.id.sangre);
 		Spinner ultimaDonacion = findViewById(R.id.ultima_donacion);
+		Spinner tipoDonacion = findViewById(R.id.tipodonacion);
 		sangre.setEnabled(false);
+		tipoDonacion.setEnabled(false);
 		ultimaDonacion.setEnabled(false);
 		if (receptor != null) {
 			swRecibir.setChecked(false);
 			swTs.setChecked(false);
 			swDonar.setChecked(true);
 			clickSwitch(swDonar);
-			for(int i = 0; i < sangre.getCount(); i++) {
-				AbstractSangreFactory asf = new SangreStringFactory((String)sangre.getItemAtPosition(i));
-				if(receptor.getSangre().equals(asf.crearSangre())) {
-					sangre.setSelection(i);
-					break;
-				}
-			}
 		} else if (donador != null) {
 			swDonar.setChecked(false);
 			swTs.setChecked(false);
 			swRecibir.setChecked(true);
 			clickSwitch(swRecibir);
+		}
+		if (receptor != null || donador != null) {
+			Persona persona = receptor != null ? receptor : donador;
 			for(int i = 0; i < sangre.getCount(); i++) {
 				AbstractSangreFactory asf = new SangreStringFactory((String)sangre.getItemAtPosition(i));
-				if(donador.getSangre().equals(asf.crearSangre())) {
+				if(persona.getSangre().equals(asf.crearSangre())) {
 					sangre.setSelection(i);
 					break;
 				}
+			}
+			if (persona.getLocalidad() != null && persona.getLocalidad().length() > 0) {
+				TextView localidad = findViewById(R.id.localidad);
+				localidad.setText(persona.getLocalidad());
+				CheckBox swLocalidad = findViewById(R.id.switch_localidad);
+				swLocalidad.setChecked(true);
+			}
+			if (persona.getProvincia() != null && persona.getProvincia().length() > 0) {
+				TextView provincia = findViewById(R.id.provincia);
+				provincia.setText(persona.getProvincia());
+				CheckBox swProvincia = findViewById(R.id.switch_provincia);
+				swProvincia.setChecked(true);
 			}
 		}
 	}
@@ -113,6 +124,7 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 					}
 				}
 				findViewById(R.id.sangre).setEnabled(swDonar.isChecked() || swRecibir.isChecked() || swTs.isChecked());
+				findViewById(R.id.tipodonacion).setEnabled(swDonar.isChecked() || swRecibir.isChecked());
 				break;
 				
 			case R.id.switch_edad_mayor:
@@ -148,6 +160,7 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		TextView localidad = findViewById(R.id.localidad);
 		TextView edad = findViewById(R.id.edad);
 		Spinner sangre = findViewById(R.id.sangre);
+		Spinner tipoDonacion = findViewById(R.id.tipodonacion);
 		Spinner ultima_donacion = findViewById(R.id.ultima_donacion);
 		if (swMayorA.isChecked() || swMenorA.isChecked()) {
 			if (edad.getText().toString().isEmpty()) {
@@ -177,15 +190,25 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 			mensaje.show();
 			return;
 		}
-		if (swDonaA.isChecked()) {
-			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());
-			Sangre s = sf.crearSangre();
-			busqueda = new BusquedaPuedeDonarA(s, busqueda);
-		}
-		if (swRecibeDe.isChecked()) {
-			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());
-			Sangre s = sf.crearSangre();
-			busqueda = new BusquedaPuedeRecibirDe(s, busqueda);
+		if (swDonaA.isChecked() || swRecibeDe.isChecked()) {
+			Donacion.TipoDonacion tipo;
+			if (tipoDonacion.getSelectedItemPosition() == 0) {
+				tipo = Donacion.TipoDonacion.SANGRE_COMPLETA;
+			} else if (tipoDonacion.getSelectedItemPosition() == 1) {
+				tipo = Donacion.TipoDonacion.GLOBULOS_ROJOS;
+			} else {
+				tipo = Donacion.TipoDonacion.PLASMA;
+			}
+			if (swDonaA.isChecked()) {
+				AbstractSangreFactory sf = new SangreStringFactory((String) sangre.getSelectedItem());
+				Sangre s = sf.crearSangre();
+				busqueda = new BusquedaPuedeDonarA(s, tipo, busqueda);
+			}
+			if (swRecibeDe.isChecked()) {
+				AbstractSangreFactory sf = new SangreStringFactory((String) sangre.getSelectedItem());
+				Sangre s = sf.crearSangre();
+				busqueda = new BusquedaPuedeRecibirDe(s, tipo, busqueda);
+			}
 		}
 		if (swTieneSangre.isChecked()) {
 			AbstractSangreFactory sf = new SangreStringFactory((String)sangre.getSelectedItem());

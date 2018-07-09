@@ -58,9 +58,9 @@ public class DonantesDeSangreTest {
 
         p1 = new Persona("Uno", "l", "p", "d", "t", "m", true, new GregorianCalendar(), new ORhPFactory().crearSangre());
         p2 = new Persona("Dos", "l", "p", "d", "t", "m", false, new GregorianCalendar(), new ABRhPFactory().crearSangre());
-        p3 = new Persona("Tres", "L", "p", "d", "t", "m", false, new GregorianCalendar(), new ARhPFactory().crearSangre());
-        p4 = new Persona("Cuatro", "L", "p", "d", "t", "m", true, new GregorianCalendar(), new BRhNFactory().crearSangre());
-        p5 = new Persona("Cinco", "A", "P", "d", "t", "m", true, new GregorianCalendar(), new ARhPFactory().crearSangre());
+        p3 = new Persona("Tres", "D", "p", "d", "t", "m", false, new GregorianCalendar(), new ARhPFactory().crearSangre());
+        p4 = new Persona("Cuatro", "D", "p", "d", "t", "m", true, new GregorianCalendar(), new BRhNFactory().crearSangre());
+        p5 = new Persona("Cinco", "A", "J", "d", "t", "m", true, new GregorianCalendar(), new ARhPFactory().crearSangre());
         dds.agregarDonante(p1);
         dds.agregarDonante(p2);
         donantes = dds.getDonantes();
@@ -90,7 +90,7 @@ public class DonantesDeSangreTest {
         assertTrue(estadistica.getAbn() == 0);
         assertTrue(estadistica.getOp() == 1);
         assertTrue(estadistica.getOn() == 0);
-        busquedaSangre = new BusquedaPuedeRecibirDe(dds.getYo().getSangre(), new BusquedaProvincia("p", new BusquedaBase()));
+        busquedaSangre = new BusquedaPuedeRecibirDe(dds.getYo().getSangre(), Donacion.TipoDonacion.GLOBULOS_ROJOS, new BusquedaProvincia("p", new BusquedaBase()));
         donantesBusqueda = dds.buscarDonantes(busquedaSangre);
         assertNotNull(donantesBusqueda);
         assertEquals(donantesBusqueda.size(), 3);
@@ -98,9 +98,9 @@ public class DonantesDeSangreTest {
         assertTrue(donantesBusqueda.contains(p2));
         assertTrue(donantesBusqueda.contains(p3));
 
-        Donacion d1 = new Donacion(p2, Calendar.getInstance());
-        Donacion d2 = new Donacion(p3, Calendar.getInstance());
-        Donacion d3 = new Donacion(p1, Calendar.getInstance());
+        Donacion d1 = new Donacion(p2, Calendar.getInstance(), Donacion.TipoDonacion.GLOBULOS_ROJOS);
+        Donacion d2 = new Donacion(p3, Calendar.getInstance(), Donacion.TipoDonacion.GLOBULOS_ROJOS);
+        Donacion d3 = new Donacion(p1, Calendar.getInstance(), Donacion.TipoDonacion.GLOBULOS_ROJOS);
         dds.agregarDonacion(p1, d1);
         dds.agregarDonacion(p1, d2);
         dds.agregarDonacion(p3, d3);

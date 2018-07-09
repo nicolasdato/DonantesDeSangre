@@ -70,7 +70,7 @@
                 android:entries="@array/sangres"
                 app:layout_constraintBottom_toBottomOf="@+id/switch_tiene_sangre"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toTopOf="@+id/switch_donar_a" />
+                app:layout_constraintTop_toBottomOf="@+id/tipodonacion" />
 
             <CheckBox
                 android:id="@+id/switch_nombre"
@@ -223,6 +223,15 @@
                 app:layout_constraintBottom_toBottomOf="@+id/switch_ultima_donacion"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/switch_ultima_donacion" />
+
+            <Spinner
+                android:id="@+id/tipodonacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/tipodonacion"
+                app:layout_constraintBottom_toTopOf="@+id/sangre"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/switch_donar_a" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

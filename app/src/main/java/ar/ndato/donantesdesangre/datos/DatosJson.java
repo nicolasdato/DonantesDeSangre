@@ -180,6 +180,7 @@ public class DatosJson implements Datos {
 		try {
 			object.putOpt("receptor", personaAJson(donacion.getReceptor()));
 			object.putOpt("fecha", dateFormat.format(donacion.getFecha().getTime()));
+			object.putOpt("tipo", donacion.getTipoDonacion().toString());
 		} catch (JSONException ex) {
 			throw new DatosException(ex.getMessage());
 		}
@@ -194,6 +195,7 @@ public class DatosJson implements Datos {
 	protected Donacion jsonADonacion(JSONObject object) throws DatosException {
 		Persona receptor = null;
 		Calendar fecha = null;
+		Donacion.TipoDonacion tipoDonacion = Donacion.TipoDonacion.GLOBULOS_ROJOS;
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
@@ -201,11 +203,12 @@ public class DatosJson implements Datos {
 			Date date = dateFormat.parse(object.getString("fecha"));
 			fecha = Calendar.getInstance();
 			fecha.setTime(date);
+			tipoDonacion = Donacion.TipoDonacion.valueOf(object.optString("tipo", "GLOBULOS_ROJOS"));
 		} catch (JSONException | ParseException ex) {
 			throw new DatosException(ex.getMessage());
 		}
 
-		return new Donacion(receptor, fecha);
+		return new Donacion(receptor, fecha, tipoDonacion);
 	}
 
 	/**

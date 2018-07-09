@@ -5,16 +5,32 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import ar.ndato.donantesdesangre.sangre.Sangre;
+
 /**
  * Donaciones que se usan en {@link DonantesDeSangre}
  */
 public class Donacion implements Serializable, Comparable<Donacion> {
+	
+	public enum TipoDonacion {
+		GLOBULOS_ROJOS,
+		SANGRE_COMPLETA,
+		PLASMA
+	}
+	
+	public enum Accion {
+		DONAR,
+		RECIBIR
+	}
+	
     private Persona receptor;
 	private Calendar fecha;
+	private TipoDonacion tipoDonacion;
 
-	public Donacion(Persona receptor, Calendar fecha) {
+	public Donacion(Persona receptor, Calendar fecha, TipoDonacion tipoDonacion) {
 		this.receptor = receptor;
 		this.fecha = fecha;
+		this.tipoDonacion = tipoDonacion == null ? TipoDonacion.GLOBULOS_ROJOS : tipoDonacion;
 	}
 
 	@Override
@@ -29,6 +45,8 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 		if(d.fecha == null && fecha != null) return false;
 		if(d.receptor != null && !d.receptor.equals(receptor)) return false;
 		if(d.receptor == null && receptor != null) return false;
+		if(d.tipoDonacion != null && !d.tipoDonacion.equals(tipoDonacion)) return false;
+		if(d.tipoDonacion == null && tipoDonacion != null) return false;
 
 		return true;
 	}
@@ -39,7 +57,7 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 		if (getReceptor() != null) {
 			hash ^= getReceptor().hashCode();
 		}
-		return hash ^ getFecha().hashCode();
+		return hash ^ getFecha().hashCode() ^ tipoDonacion.hashCode();
 	}
 
 	/**
@@ -74,6 +92,14 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 		this.fecha = fecha;
 	}
 	
+	public TipoDonacion getTipoDonacion() {
+		return tipoDonacion;
+	}
+	
+	public void setTipoDonacion(TipoDonacion tipoDonacion) {
+		this.tipoDonacion = tipoDonacion == null ? TipoDonacion.GLOBULOS_ROJOS : tipoDonacion;
+	}
+	
 	/**
 	 * Compara 2 {@link Donacion} segun su fecha, si es igual la fecha compara los receptores receptor ({@link Persona})
 	 */
@@ -90,4 +116,5 @@ public class Donacion implements Serializable, Comparable<Donacion> {
 		}
 		return 0;
 	}
+
 }

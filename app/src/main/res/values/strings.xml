@@ -67,6 +67,9 @@
     <string name="pergunta_eliminar_donacion_title">Seguro?</string>
     <string name="pergunta_eliminar_donacion">Desea eliminar la donación?</string>
     <string name="donacion_guardada">Donación guardada</string>
+    <string name="informacion_mensage">Nicolás Jorge Dato\nLU: 113101\n`Cursada: 2017</string>
+    <string name="tipo_de_donacion">Tipo de donacion:</string>
+    <string name="compatible">Compatible</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>
@@ -97,5 +100,14 @@
         <item>Más de 6 meses</item>
         <item>Más de 1 año</item>
         <item>Más de 2 años</item>
+    </string-array>
+    <string-array name="donadorreceptor">
+        <item>Donador:</item>
+        <item>Receptor:</item>
+    </string-array>
+    <string-array name="tipodonacion">
+        <item>Sangre completa</item>
+        <item>Globulos rojos</item>
+        <item>Plasma</item>
     </string-array>
 </resources>

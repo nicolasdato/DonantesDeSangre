@@ -1,8 +1,11 @@
 package ar.ndato.donantesdesangre.vista;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import java.io.File;
 
@@ -41,7 +44,32 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 		cargar(getDonantesDeSangre());
 	}
 	
-	public void cargar(DonantesDeSangre donantesDeSangre) {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_informacion:
+            	mostrarInformacion();
+            	return true;
+            case R.id.menu_tabla_compatibilidad:
+            	Intent intent = new Intent(this, TablaCompatibilidadActivity.class);
+            	startActivity(intent);
+            	return true;
+			default:
+                return super.onOptionsItemSelected(item);
+        }
+	}
+	
+	
+	private void mostrarInformacion() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.informacion_mensage).setTitle(R.string.informacion);
+		builder.setPositiveButton(R.string.ok, null);
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+	
+	protected void cargar(DonantesDeSangre donantesDeSangre) {
 		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
 		if (archivo.exists() && archivo.canRead()) {
 			try {
@@ -53,7 +81,7 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 		}
 	}
 	
-	public void guardar(DonantesDeSangre donantesDeSangre) {
+	protected void guardar(DonantesDeSangre donantesDeSangre) {
 		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
 		try {
 			Datos datos = new DatosJson(archivo);

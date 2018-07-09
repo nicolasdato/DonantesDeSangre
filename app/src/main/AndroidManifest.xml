@@ -39,8 +39,10 @@
 
         <activity android:name=".ListarDonantesActivity" />
         <activity android:name=".VerDonacionesActivity" />
-        <activity android:name=".ABMDonacionActivity"
+        <activity
+            android:name=".ABMDonacionActivity"
             android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".TablaCompatibilidadActivity"></activity>
     </application>
 
 </manifest>
