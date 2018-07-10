@@ -301,7 +301,6 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 		DialogInterface.OnClickListener listenerBuscar = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Busqueda busqueda = null;
 				Intent intent;
 				String intentStr = "donador";
 				switch (which){
@@ -315,11 +314,9 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 						break;
 					}
 				}
-				if (busqueda != null) {
-					intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
-					intent.putExtra(intentStr, donante);
-					startActivityForResult(intent, CODE_BUSQUEDA);
-				}
+				intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
+				intent.putExtra(intentStr, donante);
+				startActivityForResult(intent, CODE_BUSQUEDA);
 			}
 		};
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);

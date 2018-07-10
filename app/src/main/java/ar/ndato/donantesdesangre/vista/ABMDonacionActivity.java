@@ -85,10 +85,14 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 			if (donacion.getReceptor() != null) {
 				TextView text = findViewById(R.id.receptor);
 				text.setText(donacion.getReceptor().getNombre());
+				text = findViewById(R.id.sangreReceptor);
+				text.setText(donacion.getReceptor().getSangre().toString());
 				receptor = donacion.getReceptor();
 			}
 			TextView text = findViewById(R.id.donador);
 			text.setText(donador.getNombre());
+			text = findViewById(R.id.sangreDonador);
+			text.setText(donador.getSangre().toString());
 			Spinner dia = findViewById(R.id.dia);
 			Spinner mes = findViewById(R.id.mes);
 			Spinner anio = findViewById(R.id.anio);
@@ -220,7 +224,6 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 	
 	public void guardarDonacion(View view) {
 		agregarDonacionEsEdicion(true);
-		enVista();
 	}
 	
 	public void buscarDonador(View view) {
@@ -279,6 +282,7 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 							switch (which){
 								case DialogInterface.BUTTON_POSITIVE:
 									nuevaDonacion(donador, donacion, edicion);
+									enVista();
 									break;
 								
 								case DialogInterface.BUTTON_NEGATIVE:
@@ -298,6 +302,7 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 			}
 
 			nuevaDonacion(donador, donacion, edicion);
+			enVista();
 		}
 	}
 	
@@ -338,6 +343,8 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 					donador = persona;
 					TextView donadorText = findViewById(R.id.donador);
 					donadorText.setText(persona.getNombre());
+					donadorText = findViewById(R.id.sangreDonador);
+					donadorText.setText(persona.getSangre().toString());
 				}
 			} else if (requestCode == CODE_RECEPTOR) {
 				Switch receptorSwitch = findViewById(R.id.switch_receptor);
@@ -347,6 +354,8 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 					receptor = persona;
 					TextView receptorText = findViewById(R.id.receptor);
 					receptorText.setText(persona.getNombre());
+					receptorText = findViewById(R.id.sangreReceptor);
+					receptorText.setText(persona.getSangre().toString());
 				} else {
 					receptorSwitch.setChecked(false);
 					clickSwitchReceptor(receptorSwitch);

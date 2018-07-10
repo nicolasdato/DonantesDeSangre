@@ -42,7 +42,8 @@
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/dia"
-        app:layout_constraintStart_toStartOf="@+id/textView10" />
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/dia" />
 
     <TextView
         android:id="@+id/textView5"
@@ -61,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -190,6 +191,27 @@
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/tipodonacion"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toTopOf="@+id/tipodonacion" />
+
+    <TextView
+        android:id="@+id/sangreDonador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#dc4640"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/donador"
+        app:layout_constraintStart_toStartOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/sangreReceptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#dc4640"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/receptor"
         app:layout_constraintStart_toStartOf="@+id/textView7" />
 
 </android.support.constraint.ConstraintLayout>

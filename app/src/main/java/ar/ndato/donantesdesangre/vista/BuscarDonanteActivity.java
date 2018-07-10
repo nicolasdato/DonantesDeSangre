@@ -71,12 +71,14 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 				localidad.setText(persona.getLocalidad());
 				CheckBox swLocalidad = findViewById(R.id.switch_localidad);
 				swLocalidad.setChecked(true);
+				clickSwitch(swLocalidad);
 			}
 			if (persona.getProvincia() != null && persona.getProvincia().length() > 0) {
 				TextView provincia = findViewById(R.id.provincia);
 				provincia.setText(persona.getProvincia());
 				CheckBox swProvincia = findViewById(R.id.switch_provincia);
 				swProvincia.setChecked(true);
+				clickSwitch(swProvincia);
 			}
 		}
 	}

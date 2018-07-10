@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import ar.ndato.donantesdesangre.Donacion;
 import ar.ndato.donantesdesangre.factory.ABRhNFactory;
@@ -47,6 +48,8 @@ public class TablaCompatibilidadActivity extends AppCompatActivity implements Ad
 		Donacion.Accion accion;
 		Spinner donadorReceptor = findViewById(R.id.donadorreceptor);
 		accion = donadorReceptor.getSelectedItemPosition() == SELECCION_DONADOR ? Donacion.Accion.DONAR : Donacion.Accion.RECIBIR;
+		TextView textDonadorReceptor = findViewById(R.id.textDonadorReceptor);
+		textDonadorReceptor.setText(accion == Donacion.Accion.RECIBIR ? R.string.donador : R.string.receptor);
 		Spinner sangerSpinner = findViewById(R.id.sangre);
 		AbstractSangreFactory sangreFactory = new SangreStringFactory((String)sangerSpinner.getSelectedItem());
 		Sangre sangre = sangreFactory.crearSangre();
