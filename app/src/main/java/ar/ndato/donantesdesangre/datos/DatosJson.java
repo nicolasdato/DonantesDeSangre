@@ -6,9 +6,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -29,21 +32,21 @@ import ar.ndato.donantesdesangre.sangre.Sangre;
 
 public class DatosJson implements Datos {
 
-	private File archivo;
+	private FileDescriptor archivo;
 	private Persona yo;
 	private Map<Persona, Set<Donacion>> donantes;
 
-	public DatosJson(File archivo) throws DatosException {
-		if(archivo == null) {
+	public DatosJson(FileDescriptor archivo) throws DatosException {
+		if (archivo == null) {
 			throw new DatosException("archivo es null");
 		}
-
+		
 		this.archivo = archivo;
 		yo = null;
 		donantes = new HashMap<Persona, Set<Donacion>>();
 	}
-
-
+	
+	
 	@Override
 	public void leer() throws DatosException {
 		JSONObject object = null;

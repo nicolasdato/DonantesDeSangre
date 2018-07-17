@@ -295,11 +295,12 @@ public class DonantesDeSangre implements Serializable {
 	        	agregarDonaciones(persona, datos.getDonaciones(persona));
 	        }
 			Persona yo = datos.getYo();
-	        this.yo = yo;
+	        if (this.yo == null) {
+		        this.yo = yo;
+	        }
 	        if(!donantes.containsKey(yo)) {
 		        donantes.put(yo, new HashSet<Donacion>());
 	        }
         }
     }
-
 }

@@ -2,12 +2,15 @@ package ar.ndato.donantesdesangre.vista;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 
 import ar.ndato.donantesdesangre.DonantesDeSangre;
 import ar.ndato.donantesdesangre.datos.Datos;
@@ -73,9 +76,10 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
 		if (archivo.exists() && archivo.canRead()) {
 			try {
-				Datos datos = new DatosJson(archivo);
+				FileDescriptor archivoDescriptor = getContentResolver().openFileDescriptor(Uri.parse(archivo.toURI().toString()), "rw").getFileDescriptor();
+				Datos datos = new DatosJson(archivoDescriptor);
 				donantesDeSangre.importar(datos);
-			} catch (DatosException ex) {
+			} catch (IOException | DatosException ex) {
 				ex.printStackTrace();
 			}
 		}
@@ -84,9 +88,10 @@ public abstract class ActividadPersistente extends AppCompatActivity {
 	protected void guardar(DonantesDeSangre donantesDeSangre) {
 		File archivo = new File(getApplicationContext().getFilesDir(), getText(R.string.archivo_interno).toString());
 		try {
-			Datos datos = new DatosJson(archivo);
+			FileDescriptor archivoDescriptor = getContentResolver().openFileDescriptor(Uri.parse(archivo.toURI().toString()), "rw").getFileDescriptor();
+			Datos datos = new DatosJson(archivoDescriptor);
 			donantesDeSangre.exportar(datos);
-		} catch (DatosException ex) {
+		} catch (IOException | DatosException ex) {
 			ex.printStackTrace();
 		}
 	}
