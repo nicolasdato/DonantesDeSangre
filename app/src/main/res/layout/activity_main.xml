@@ -24,18 +24,19 @@
         android:onClick="agregarDonante"
         android:text="@string/agegar_donante"
         app:layout_constraintBottom_toTopOf="@+id/listar_todos"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="@+id/listar_todos"
+        app:layout_constraintStart_toStartOf="@+id/listar_todos"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonBuscar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:onClick="buscarDonante"
         android:text="@string/buscar_donante"
         app:layout_constraintBottom_toBottomOf="@+id/listar_todos"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button6"
+        app:layout_constraintStart_toStartOf="@+id/button6"
         app:layout_constraintTop_toTopOf="@+id/listar_todos" />
 
     <Button
@@ -152,11 +153,11 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:onClick="misDatos"
         android:text="@string/mis_datos"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAgegar"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBuscar"
+        app:layout_constraintStart_toStartOf="@+id/buttonBuscar"
         app:layout_constraintTop_toTopOf="@+id/buttonAgegar" />
 
     <android.support.constraint.Guideline
@@ -170,10 +171,12 @@
         android:id="@+id/listar_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:onClick="listarTodos"
         android:text="@string/listar_todos"
         app:layout_constraintBottom_toTopOf="@+id/buttonDonacion"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="@+id/buttonDonacion"
+        app:layout_constraintStart_toStartOf="@+id/buttonDonacion"
         app:layout_constraintTop_toBottomOf="@+id/buttonAgegar" />
 
     <Button
