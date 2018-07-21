@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ar.ndato.donantesdesangre.vista">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_icon"
@@ -42,7 +44,8 @@
         <activity
             android:name=".ABMDonacionActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".TablaCompatibilidadActivity"></activity>
+        <activity android:name=".TablaCompatibilidadActivity" />
+        <activity android:name=".EstadisticaActivity"></activity>
     </application>
 
 </manifest>

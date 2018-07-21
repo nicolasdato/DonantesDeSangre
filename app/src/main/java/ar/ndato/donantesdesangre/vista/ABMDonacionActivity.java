@@ -231,6 +231,8 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 		if (receptor != null) {
 			intent.putExtra("receptor", receptor);
 		}
+		Intent intentParaBusqueda = new Intent(this, ListarDonantesActivity.class);
+		intent.putExtra("intent", intentParaBusqueda);
 		startActivityForResult(intent, CODE_DONADOR);
 	}
 	
@@ -239,6 +241,8 @@ public class ABMDonacionActivity extends ActividadPersistente implements Adapter
 		if (donador != null) {
 			intent.putExtra("donador", donador);
 		}
+		Intent intentParaBusqueda = new Intent(this, ListarDonantesActivity.class);
+		intent.putExtra("intent", intentParaBusqueda);
 		startActivityForResult(intent, CODE_RECEPTOR);
 	}
 	

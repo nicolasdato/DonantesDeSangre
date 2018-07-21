@@ -315,6 +315,8 @@ public class ABMDonanteActivity extends ActividadPersistente implements AdapterV
 					}
 				}
 				intent = new Intent(ABMDonanteActivity.this, BuscarDonanteActivity.class);
+				Intent intentParaBusqueda = new Intent(ABMDonanteActivity.this, ListarDonantesActivity.class);
+				intent.putExtra("intent", intentParaBusqueda);
 				intent.putExtra(intentStr, donante);
 				startActivityForResult(intent, CODE_BUSQUEDA);
 			}

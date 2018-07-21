@@ -37,8 +37,13 @@ public class MainActivity extends ActividadPersistente {
 	
 	public void buscarDonante(View view) {
 		Intent intent = new Intent(this, BuscarDonanteActivity.class);
-		Intent intentParaBusqueda = new Intent(this, ABMDonanteActivity.class);
-		intentParaBusqueda.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
+		
+		Intent intentParaLista = new Intent(this, ABMDonanteActivity.class);
+		intentParaLista.putExtra("tipo", ABMDonanteActivity.MODIFICACION);
+		
+		Intent intentParaBusqueda = new Intent(this, ListarDonantesActivity.class);
+		intentParaBusqueda.putExtra("intent", intentParaLista);
+		
 		intent.putExtra("intent", intentParaBusqueda);
 		startActivity(intent);
 	}
@@ -66,7 +71,11 @@ public class MainActivity extends ActividadPersistente {
 	
 	public void verDonaciones(View view) {
 		Intent intent = new Intent(this, BuscarDonanteActivity.class);
-		Intent intentParaBusqueda = new Intent(this, VerDonacionesActivity.class);
+		Intent intentParaLista = new Intent(this, VerDonacionesActivity.class);
+		
+		Intent intentParaBusqueda = new Intent(this, ListarDonantesActivity.class);
+		intentParaBusqueda.putExtra("intent", intentParaLista);
+		
 		intent.putExtra("intent", intentParaBusqueda);
 		startActivity(intent);
 	}
@@ -78,9 +87,13 @@ public class MainActivity extends ActividadPersistente {
 	}
 	
 	public void estadisticas(View view) {
-		/*Intent intent = new Intent(this, EstadisticasActivity.class);
-		intent.putExtra("donantesDeSangre", getDonantesDeSangre());
-		startActivity(intent);*/
+		Intent intent = new Intent(this, BuscarDonanteActivity.class);
+		
+		Intent intentParaEstadistica = new Intent(this, EstadisticaActivity.class);
+		
+		intent.putExtra("titulo", R.string.filtro_para_estadistica);
+		intent.putExtra("intent", intentParaEstadistica);
+		startActivity(intent);
 	}
 	
 	public void importarDatos(View view) {

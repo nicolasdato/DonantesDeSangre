@@ -37,6 +37,9 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		intentParaBusqueda = (Intent)getIntent().getParcelableExtra("intent");
 		Persona donador = (Persona)getIntent().getSerializableExtra("donador");
 		Persona receptor = (Persona)getIntent().getSerializableExtra("receptor");
+		int titulo_id = getIntent().getIntExtra("titulo", R.string.buscar_donante);
+		TextView titulo = findViewById(R.id.titulo);
+		titulo.setText(titulo_id);
 		CheckBox swDonar = findViewById(R.id.switch_donar_a);
 		CheckBox swRecibir = findViewById(R.id.switch_recibir_de);
 		CheckBox swTs = findViewById(R.id.switch_tiene_sangre);
@@ -223,11 +226,15 @@ public class BuscarDonanteActivity extends ActividadPersistente {
 		if (swEsFavorito.isChecked()) {
 			busqueda = new BusquedaEsFavorito(busqueda);
 		}
-	
-		Intent intent = new Intent(this, ListarDonantesActivity.class);
-		intent.putExtra("intent", intentParaBusqueda);
-		intent.putExtra("busqueda", busqueda);
-		startActivityForResult(intent, CODE_BUSQUEDA);
+		if (intentParaBusqueda != null) {
+			intentParaBusqueda.putExtra("busqueda", busqueda);
+			startActivityForResult(intentParaBusqueda, CODE_BUSQUEDA);
+		}  else {
+			Intent intent = new Intent();
+			intent.putExtra("busqueda", busqueda);
+			setResult(RESULT_OK, intent);
+			finish();
+		}
 	}
 	
 	@Override

@@ -74,6 +74,8 @@
     <string name="fallo_exportado">Error al guardar los datos</string>
     <string name="fallo_importado">Error al leer los datos</string>
     <string name="importado">Datos importados</string>
+    <string name="filtro_para_estadistica">Filtro para la estadística</string>
+    <string name="cantidad">Cantidad</string>
     <string-array name="meses">
         <item>Enero</item>
         <item>Febrero</item>
