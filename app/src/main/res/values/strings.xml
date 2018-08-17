@@ -67,7 +67,7 @@
     <string name="pergunta_eliminar_donacion_title">Seguro?</string>
     <string name="pergunta_eliminar_donacion">Desea eliminar la donación?</string>
     <string name="donacion_guardada">Donación guardada</string>
-    <string name="informacion_mensage">Nicolás Jorge Dato\nLU: 113101\n`Cursada: 2017</string>
+    <string name="informacion_mensage">Nicolás Jorge Dato\nLU: 113101\nCursada: 2017</string>
     <string name="tipo_de_donacion">Tipo de donacion:</string>
     <string name="compatible">Compatible</string>
     <string name="exportado">Datos guardados</string>
