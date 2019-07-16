@@ -1,0 +1,137 @@
+\documentclass{beamer}
+\usepackage[latin1]{inputenc}
+\beamertemplatenavigationsymbolsempty
+\addtobeamertemplate{navigation symbols}{}{
+	\usebeamerfont{footline}
+	\usebeamercolor[fg]{footline}
+	\hspace{1em}
+	\insertframenumber/\inserttotalframenumber
+}
+%\setbeamertemplate{navigation symbols}{}
+
+\usetheme{Antibes}
+\usecolortheme{beaver}
+
+\title{Defensa del Proyecto: \emph{Donantes de Sangre}}
+\author{Nicol\'as Jorge Dato\\L.U. 113101}
+\institute{Universidad Nacional del Sur}
+\date{16/07/2019}
+
+\begin{document}
+	\begin{frame}
+		\maketitle
+	\end{frame}
+
+	\section{Introducci\'on}
+		\begin{frame}
+			\Huge Introducci\'on
+		\end{frame}
+		\begin{frame}
+			\frametitle{Funcionalidades de la aplicaci\'on}
+			Funcionalidades:
+			\begin{itemize}
+				\item Tener personas agendadas con su tipo de sangre
+				\item Buscar personas por tipo de sangre, o por compatiblidades
+				\item Agendar donaciones hechas por las personas agendadas
+				\item Compartir la agenda con otras personas
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Tipos de sangre, donaciones y compatibilidad}
+			\begin{itemize}
+				\item Hacerle siempre caso al profesional de salud
+				\item Existen muchos tipos de sangre, pero pocos son los mas comunes
+				\item La sangre tiene diferentes componentes y se puede donar todo o algunos
+				\item Depende de que componentes se donen ser\'a la compatibilidad
+			\end{itemize}
+		\end{frame}
+
+	\section{Uso de la aplicaci\'on}
+		\begin{frame}
+			\Huge Uso de la aplicaci\'on
+		\end{frame}
+		\begin{frame}
+			\frametitle{Agendar personas}
+			\begin{itemize}
+				\item Datos del usuario
+				\item Agregar m\'as donantes
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Buscar donantes}
+			\begin{itemize}
+				\item Listar todos
+				\item Buscar con filtros
+				\item Editar donantes
+				\item Eliminar donantes
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Donaciones}
+			\begin{itemize}
+				\item Agregar donaciones
+				\item Ver donaciones
+				\item Eliminar donaciones
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Compartir la agenda}
+			\begin{itemize}
+				\item Exportar datos
+				\item Imporar datos
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Extras}
+			\begin{itemize}
+				\item Estad\'istica
+				\item Tabla de compatibilidad
+				\item Informaci\'on m\'ia
+			\end{itemize}
+		\end{frame}
+
+	\section{Desarrollo}
+		\begin{frame}
+			\Huge Desarrollo
+		\end{frame}
+		\begin{frame}
+			\Huge UML
+		\end{frame}
+		\begin{frame}
+			\frametitle{Android}
+			\begin{itemize}
+				\item Actividades
+					\begin{itemize}
+						\item Principal
+						\item Busqueda
+					\end{itemize}
+				\item Persistencia de datos
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Clases}
+			\begin{itemize}
+				\item DonantesDeSangre
+				\item Persona
+				\item Donaci\'on
+				\item Sangre
+				\item Estadistica
+			\end{itemize}
+		\end{frame}
+		\begin{frame}
+			\frametitle{Clases}
+			\begin{itemize}
+				\item SangreFactory
+				\item VisitorDonacion
+				\item Busqueda
+				\item VisitorEstadistica
+				\item Datos
+			\end{itemize}
+		\end{frame}
+
+		\begin{frame}
+			\Huge FIN
+		\end{frame}
+
+\end{document}
+
